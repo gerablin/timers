@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timers/provider/timer_provider.dart';
 import 'package:timers/timer/timer_controller.dart';
 import 'package:timers/timer/timer_countdown.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -37,12 +39,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isPlaying = false;
   double progressValue = 1.0;
   final initialCountdown = 10;
-  double currentValue = 0;
 
   @override
   void initState() {
     super.initState();
-
     _controller.pause();
   }
 
@@ -52,28 +52,17 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  void _updateProgress() {
-    debugPrint("${_controller.currentMicroSeconds}");
-    // progressValue = initialCountdown ;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text("Dein Timer"),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            CircularProgressIndicator(
-              value: progressValue,
-            ),
-            const Text(
-              "Let's go",
-            ),
             MainTimer(
               controller: _controller,
               initialCountdown: initialCountdown,
@@ -89,21 +78,53 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class MainTimer extends StatelessWidget {
-  const MainTimer(
-      {super.key, required this.controller, required this.initialCountdown});
+class MainTimer extends StatefulWidget {
+  MainTimer({
+    super.key,
+    required this.controller,
+    required this.initialCountdown,
+  });
 
   final CountdownController controller;
   final int initialCountdown;
 
   @override
+  State<MainTimer> createState() => _MainTimerState();
+}
+
+class _MainTimerState extends State<MainTimer> {
+
+  double progress = 1.0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _onTimerUpdate(double value) {
+    setState(() {
+      progress = value;
+      print(progress);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Countdown(
-      controller: controller,
-      seconds: initialCountdown,
-      build: (BuildContext context, double time) =>
-          Text(time.toString(), style: TextStyle(fontSize: 24)),
-      interval: Duration(milliseconds: 100),
+    return Column(
+      children: [
+        CircularProgressIndicator(
+          value: progress,
+        ),
+        Countdown(
+          controller: widget.controller,
+          seconds: widget.initialCountdown,
+          build: (BuildContext context, double time) {
+            return Text(time.toString(), style: TextStyle(fontSize: 24));
+          },
+          interval: Duration(milliseconds: 100),
+          onTimerUpdate: _onTimerUpdate,
+        ),
+      ],
     );
   }
 }

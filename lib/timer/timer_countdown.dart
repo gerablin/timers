@@ -21,6 +21,8 @@ class Countdown extends StatefulWidget {
   /// Controller
   final CountdownController? controller;
 
+  // Listener callback
+  final void Function(double)? onTimerUpdate;
   ///
   /// Simple countdown timer
   ///
@@ -31,6 +33,7 @@ class Countdown extends StatefulWidget {
     this.interval = const Duration(seconds: 1),
     this.onFinished,
     this.controller,
+    this.onTimerUpdate
   }) : super(key: key);
 
   @override
@@ -152,6 +155,7 @@ class _CountdownState extends State<Countdown> {
             widget.controller?.isCompleted = true;
           } else {
             _onFinishedExecuted = false;
+            _updateTimer(timer);
             setState(() {
               _currentMicroSeconds =
                   _currentMicroSeconds - widget.interval.inMicroseconds;
@@ -166,5 +170,20 @@ class _CountdownState extends State<Countdown> {
       }
       widget.controller?.isCompleted = true;
     }
+  }
+
+  void _updateTimer(Timer timer) {
+    setState(() {
+      _currentMicroSeconds -= widget.interval.inMicroseconds;
+      if (widget.onTimerUpdate != null) {
+        widget.onTimerUpdate!(_currentMicroSeconds / (_secondsFactor *10));
+      }
+      if (_currentMicroSeconds <= 0) {
+        timer.cancel();
+        if (widget.onFinished != null) {
+          widget.onFinished!();
+        }
+      }
+    });
   }
 }
