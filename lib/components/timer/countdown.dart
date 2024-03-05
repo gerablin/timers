@@ -27,6 +27,7 @@ class _CountdownState extends State<Countdown>
   late AnimationController _controller;
   late Animation<double> _animation;
 
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +36,7 @@ class _CountdownState extends State<Countdown>
           vsync: this,
           duration: Duration(seconds: widget.seconds),
         );
+    //TODO: Update this animation accordingly
     _animation = Tween<double>(
       begin: widget.seconds.toDouble(),
       end: 0.0,
@@ -49,6 +51,7 @@ class _CountdownState extends State<Countdown>
         if (status == AnimationStatus.completed) {
           if (widget.onFinished != null) {
             widget.onFinished!();
+            widget.onTimerUpdate!(_controller.duration!.inSeconds.toDouble());
           }
         }
       });

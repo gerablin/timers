@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/buttons/secondary_button.dart';
 import 'package:timers/components/timer/countdown.dart';
+import 'package:timers/models/timer.dart';
 import 'package:timers/utils/size_config.dart';
 
 class MainTimer extends StatefulWidget {
@@ -21,13 +22,36 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   bool isPlaying = false;
   late AnimationController _controller;
 
+  late int currentTimer;
+  WorkoutTimer workoutTimer =
+      WorkoutTimer(workoutCountDown: 3, restCountDown: 2, runs: 3);
+  late List<Pair<int, bool>> timers;
+  late int text;
   @override
   void initState() {
+    timers = workoutTimer.generateCountdowns();
+    currentTimer = timers[0].first;
+    text = currentTimer;
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: widget.initialCountdown),
+      duration: Duration(seconds: currentTimer),
     );
+    _setupNextTimer();
     super.initState();
+  }
+
+  void _setupNextTimer() {
+    if (timers.isNotEmpty) {
+      currentTimer = timers[0].first;
+      _controller.duration = Duration(seconds: currentTimer);
+      timers.removeAt(0);
+      setState(() {});
+    } else {
+      //TODO handle finish
+      print("WORKOUT DONE");
+    }
+    _resetTimer();
+    setState(() {});
   }
 
   void _startPauseTimer() {
@@ -44,9 +68,11 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   }
 
   void _onTimerUpdate(double value) {
+    text = value.toInt();
+    print("ontimer update with $value");
+    print("currentTimer in update : $currentTimer");
     setState(() {
-      progress =  value / widget.initialCountdown;
-      print(progress);
+      progress = value / currentTimer;
     });
   }
 
@@ -73,13 +99,14 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
                   ),
                 ),
                 Countdown(
-                  seconds: widget.initialCountdown,
+                  seconds: currentTimer,
                   build: (BuildContext context, double time) {
-                    return Text(time.round().toString(),
+                    return Text(text.toString(),
                         style: TextStyle(fontSize: 24));
                   },
                   onTimerUpdate: _onTimerUpdate,
                   animationController: _controller,
+                  onFinished: _setupNextTimer,
                 ),
               ],
             ),
