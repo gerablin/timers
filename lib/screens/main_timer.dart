@@ -17,19 +17,15 @@ class MainTimer extends StatefulWidget {
 }
 
 class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
-  // final CountdownController _controller = CountdownController(autoStart: false);
-
   double progress = 1.0;
   bool isPlaying = false;
-  double progressValue = 1.0;
-  final initialCountdown = 10;
   late AnimationController _controller;
 
   @override
   void initState() {
-     _controller = AnimationController(
+    _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: initialCountdown),
+      duration: Duration(seconds: widget.initialCountdown),
     );
     super.initState();
   }
@@ -49,7 +45,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
 
   void _onTimerUpdate(double value) {
     setState(() {
-      progress = value;
+      progress =  value / widget.initialCountdown;
       print(progress);
     });
   }

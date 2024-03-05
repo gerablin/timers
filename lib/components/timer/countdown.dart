@@ -36,7 +36,7 @@ class _CountdownState extends State<Countdown>
           duration: Duration(seconds: widget.seconds),
         );
     _animation = Tween<double>(
-      begin: 1.0,
+      begin: widget.seconds.toDouble(),
       end: 0.0,
     ).animate(_controller)
       ..addListener(() {
@@ -62,6 +62,6 @@ class _CountdownState extends State<Countdown>
 
   @override
   Widget build(BuildContext context) {
-    return widget.build(context, _animation.value * 10);
+    return widget.build(context, _animation.value);
   }
 }

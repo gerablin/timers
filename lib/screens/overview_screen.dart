@@ -5,7 +5,7 @@ class OverviewScreen extends StatelessWidget {
   const OverviewScreen({super.key});
 
   void _navigateToCreateTimer(BuildContext context) {
-    context.push('/timer/10');
+    context.push('/timer/13');
   }
   @override
   Widget build(BuildContext context) {
