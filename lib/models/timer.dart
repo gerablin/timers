@@ -21,10 +21,6 @@ extension CountdownListExtension on WorkoutTimer {
       countdowns.add(Pair<int, bool>(restCountDown, true));
       countdowns.add(Pair<int, bool>(workoutCountDown, false));
     }
-
-    // Add the last workout countdown
-    countdowns.add(Pair<int, bool>(workoutCountDown, false));
-
     return countdowns;
   }
 }

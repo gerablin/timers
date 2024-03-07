@@ -27,6 +27,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
       WorkoutTimer(workoutCountDown: 3, restCountDown: 2, runs: 3);
   late List<Pair<int, bool>> timers;
   late int text;
+
   @override
   void initState() {
     timers = workoutTimer.generateCountdowns();
@@ -41,38 +42,43 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   }
 
   void _setupNextTimer() {
-    if (timers.isNotEmpty) {
-      currentTimer = timers[0].first;
-      _controller.duration = Duration(seconds: currentTimer);
-      timers.removeAt(0);
-      setState(() {});
-    } else {
-      //TODO handle finish
-      print("WORKOUT DONE");
-    }
-    _resetTimer();
-    setState(() {});
+    setState(() {
+      if (timers.isNotEmpty) {
+        currentTimer = timers[0].first;
+        _controller.duration = Duration(seconds: currentTimer);
+        print(" new controller start time: ${_controller.duration}");
+        timers.removeAt(0);
+      } else {
+        //TODO handle finish
+        print("WORKOUT DONE");
+      }
+      _resetTimer();
+    });
   }
 
   void _startPauseTimer() {
-    isPlaying ? _controller.stop() : _controller.forward();
-    isPlaying = !isPlaying;
-    setState(() {});
+    setState(() {
+      isPlaying ? _controller.stop() : _controller.forward();
+      isPlaying = !isPlaying;
+    });
   }
 
   void _resetTimer() {
-    _controller.reset();
-    _controller.stop();
-    isPlaying = false;
-    setState(() {});
+    setState(() {
+      _controller.reset();
+      _controller.stop();
+      isPlaying = false;
+    });
   }
 
   void _onTimerUpdate(double value) {
-    text = value.toInt();
-    print("ontimer update with $value");
-    print("currentTimer in update : $currentTimer");
     setState(() {
+      if(value != 0.0){
+      text = value.toInt();
+      print("ontimer update with $value");
+      // print("currentTimer in update : $currentTimer");
       progress = value / currentTimer;
+      }
     });
   }
 
