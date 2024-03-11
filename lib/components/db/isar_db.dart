@@ -35,7 +35,10 @@ class IsarDb {
     final isar = await db;
     return isar.workoutTimers.where().findAll();
   }
-
+  Future<WorkoutTimer?> getWorkoutTimerById(int id) async {
+    final isar = await db;
+    return isar.workoutTimers.get(id);
+  }
   Future<void> cleanDb() async{
     final isar = await db;
     isar.writeTxn(() => isar.clear());

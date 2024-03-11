@@ -4,7 +4,7 @@ import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/models/timer.dart';
 
-class CreateTimerInputs extends StatelessWidget {
+class CreateTimerInputs extends StatefulWidget {
   const CreateTimerInputs({
     super.key,
     required this.workoutTimeController,
@@ -19,6 +19,19 @@ class CreateTimerInputs extends StatelessWidget {
   final IsarDb db;
 
   @override
+  State<CreateTimerInputs> createState() => _CreateTimerInputsState();
+}
+
+class _CreateTimerInputsState extends State<CreateTimerInputs> {
+
+  @override
+  void dispose() {
+    widget.workoutTimeController.dispose();
+    widget.restTimeController.dispose();
+    widget.runsController.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +40,7 @@ class CreateTimerInputs extends StatelessWidget {
         Text("Create new Timer"),
         // Workout time
         TextField(
-          controller: workoutTimeController,
+          controller: widget.workoutTimeController,
           decoration:
           InputDecoration(labelText: "Enter your workout time"),
           keyboardType: TextInputType.number,
@@ -37,7 +50,7 @@ class CreateTimerInputs extends StatelessWidget {
         ),
         // rest time
         TextField(
-          controller: restTimeController,
+          controller: widget.restTimeController,
           decoration:
           InputDecoration(labelText: "Enter your rest time"),
           keyboardType: TextInputType.number,
@@ -47,7 +60,7 @@ class CreateTimerInputs extends StatelessWidget {
         ),
         // runs
         TextField(
-          controller: runsController,
+          controller: widget.runsController,
           decoration:
           new InputDecoration(labelText: "Enter your runs"),
           keyboardType: TextInputType.number,
@@ -58,20 +71,20 @@ class CreateTimerInputs extends StatelessWidget {
         MainButton(
             text: "Create Workout",
             callback: () {
-              if (workoutTimeController.text.isNotEmpty &&
-                  restTimeController.text.isNotEmpty &&
-                  runsController.text.isNotEmpty) {
-                db.saveWorkout(WorkoutTimer(
+              if (widget.workoutTimeController.text.isNotEmpty &&
+                  widget.restTimeController.text.isNotEmpty &&
+                  widget.runsController.text.isNotEmpty) {
+                widget.db.saveWorkout(WorkoutTimer(
                     workoutCountDown:
-                    int.parse(workoutTimeController.text),
-                    restCountDown: int.parse(restTimeController.text),
-                    runs: int.parse(runsController.text)));
+                    int.parse(widget.workoutTimeController.text),
+                    restCountDown: int.parse(widget.restTimeController.text),
+                    runs: int.parse(widget.runsController.text)));
                 Navigator.pop(context);
               } else {
-                print("Something was empty"
-                    "${workoutTimeController.text} Workout Input"
-                    "${restTimeController.text} Rest Input"
-                    "${runsController.text} Run Input");
+                debugPrint("Something was empty"
+                    "${widget.workoutTimeController.text} Workout Input"
+                    "${widget.restTimeController.text} Rest Input"
+                    "${widget.runsController.text} Run Input");
               }
             })
       ],
