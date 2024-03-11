@@ -1,12 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:timers/components/db/isar_db.dart';
+import 'package:timers/models/timer.dart';
 import 'package:timers/screens/main_timer.dart';
 import 'package:timers/screens/overview_screen.dart';
 import 'package:timers/utils/size_config.dart';
 
 void main() {
-  runApp(ProviderScope(child: const MyApp()));
+  runApp( MyApp());
+  initDatabaseHive();
+  initDatabaseIsar();
+}
+
+Future<void> initDatabaseIsar() async {
+  WorkoutTimer workoutTimer =
+  WorkoutTimer(workoutCountDown: 3, restCountDown: 2, runs: 3);
+  await IsarDb().cleanDb();
+  await IsarDb().saveWorkout(workoutTimer);
+}
+Future<void> initDatabaseHive() async {
+  // final directory = await getApplicationDocumentsDirectory();
+  // await Hive..initFlutter(directory.path)..registerAdapter();
+  await addDefaultWorkoutHive();
+}
+
+Future<void> addDefaultWorkoutHive() async {
+  WorkoutTimer workoutTimer =
+  WorkoutTimer(workoutCountDown: 3, restCountDown: 2, runs: 3);
+  //
+  // var workoutBox = await Hive.openBox('workout_timers');
+  // workoutBox.clear();
+  // workoutBox.add(workoutTimer);
+  // print(workoutBox.get(0));
 }
 
 late SizeConfig sizeConfig;
@@ -28,12 +53,12 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
       ])
 ]);
 
-class MyApp extends ConsumerWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     sizeConfig = SizeConfig();
     sizeConfig.init(context);
     return MaterialApp.router(

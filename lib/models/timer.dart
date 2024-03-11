@@ -1,14 +1,24 @@
+
+
+
+import 'package:isar/isar.dart';
+
+part 'timer.g.dart';
+
+@collection
 class WorkoutTimer {
-  final int restCountDown;
-  final int workoutCountDown;
-  final int runs;
+  Id id = Isar.autoIncrement; // you can also use id = null to auto increment
+
+  int restCountDown;
+  int workoutCountDown;
+  int runs;
 
   WorkoutTimer(
       {required this.workoutCountDown,
       required this.restCountDown,
       required this.runs});
-
 }
+
 extension CountdownListExtension on WorkoutTimer {
   List<Pair<int, bool>> generateCountdowns() {
     List<Pair<int, bool>> countdowns = [];
