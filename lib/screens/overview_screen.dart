@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/utils/size_config.dart';
 
 import '../models/timer.dart';
 
-WorkoutTimer workoutTimer =
-    WorkoutTimer(workoutCountDown: 3, restCountDown: 2, runs: 3);
-
-List<WorkoutTimer> workouts = [workoutTimer];
-
 class OverviewScreen extends StatelessWidget {
-  const OverviewScreen({super.key});
+  OverviewScreen({super.key});
+
+  final IsarDb db = IsarDb();
 
   void _navigateToWorkout(BuildContext context) {
     context.push('/timer/13');
@@ -26,7 +24,10 @@ class OverviewScreen extends StatelessWidget {
       body: Column(
         children: [
           Text("welcome"),
-          WorkoutList(onClick: () => _navigateToWorkout(context))
+          WorkoutList(
+            onClick: () => _navigateToWorkout(context),
+            db: db,
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -38,9 +39,10 @@ class OverviewScreen extends StatelessWidget {
 }
 
 class WorkoutList extends StatelessWidget {
-  const WorkoutList({super.key, required this.onClick});
+  const WorkoutList({super.key, required this.onClick, required this.db});
 
   final VoidCallback onClick;
+  final IsarDb db;
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +51,26 @@ class WorkoutList extends StatelessWidget {
           EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 4),
       child: Column(
         children: [
-          ...workouts.map((workout) => WorkoutCard(
-                workout: workout,
-                onClick: onClick,
-              ))
+          FutureBuilder(
+              future: db.getAllWorkoutTimers(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) return Text(snapshot.error.toString());
+
+                if (snapshot.hasData) {
+                  final List<WorkoutCard> workoutCards = [];
+                  final workouts = snapshot.data;
+                  for (var workout in workouts!) {
+                    workoutCards.add(WorkoutCard(
+                      workout: workout,
+                      onClick: onClick,
+                    ));
+                  }
+                  return Column(
+                    children: [...workoutCards],
+                  );
+                }
+                return const Center(child: CircularProgressIndicator());
+              }),
         ],
       ),
     );
