@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:isar/isar.dart';
+import 'package:timers/components/buttons/main_button.dart';
+import 'package:timers/components/create_timer_inputs.dart';
 import 'package:timers/components/db/isar_db.dart';
+import 'package:timers/screens/overview/create_timer_bottom_sheet.dart';
 import 'package:timers/utils/size_config.dart';
 
-import '../models/timer.dart';
+import '../../models/timer.dart';
 
 class OverviewScreen extends StatelessWidget {
   OverviewScreen({super.key});
 
   final IsarDb db = IsarDb();
 
-  void _navigateToWorkout(BuildContext context) {
-    context.push('/timer/13');
+  void _openCreateTimerSheet(BuildContext context,) {
+    showCreateTimerBottomSheet(context, db);
   }
 
   @override
@@ -21,17 +26,18 @@ class OverviewScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Dein Timer"),
       ),
-      body: Column(
-        children: [
-          Text("welcome"),
-          WorkoutList(
-            onClick: () => _navigateToWorkout(context),
-            db: db,
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text("welcome"),
+            WorkoutList(
+              db: db,
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _navigateToWorkout(context),
+        onPressed: () => _openCreateTimerSheet(context),
         child: Icon(Icons.add),
       ),
     );
@@ -39,10 +45,13 @@ class OverviewScreen extends StatelessWidget {
 }
 
 class WorkoutList extends StatelessWidget {
-  const WorkoutList({super.key, required this.onClick, required this.db});
+  const WorkoutList({super.key, required this.db});
 
-  final VoidCallback onClick;
   final IsarDb db;
+
+  void _navigateToWorkout(BuildContext context, int id) {
+    context.push('/timer/${id.toString()}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +60,8 @@ class WorkoutList extends StatelessWidget {
           EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 4),
       child: Column(
         children: [
-          FutureBuilder(
-              future: db.getAllWorkoutTimers(),
+          StreamBuilder(
+              stream: db.listenToWorkoutTimers(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) return Text(snapshot.error.toString());
 
@@ -62,7 +71,7 @@ class WorkoutList extends StatelessWidget {
                   for (var workout in workouts!) {
                     workoutCards.add(WorkoutCard(
                       workout: workout,
-                      onClick: onClick,
+                      onClick:() => _navigateToWorkout(context,workout.id),
                     ));
                   }
                   return Column(

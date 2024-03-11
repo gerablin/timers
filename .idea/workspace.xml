@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="iterate through all set timers">
+    <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="show timers from db">
+      <change afterPath="$PROJECT_DIR$/lib/components/create_timer_inputs.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/overview/create_timer_bottom_sheet.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/overview/overview_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/overview_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/overview_screen.dart" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +126,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709810708661</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="show timers from db">
+      <option name="closed" value="true" />
+      <created>1710172896744</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1710172896744</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -137,6 +149,7 @@
     <MESSAGE value="calculate given time correctly" />
     <MESSAGE value="Added list of multiple timers" />
     <MESSAGE value="iterate through all set timers" />
-    <option name="LAST_COMMIT_MESSAGE" value="iterate through all set timers" />
+    <MESSAGE value="show timers from db" />
+    <option name="LAST_COMMIT_MESSAGE" value="show timers from db" />
   </component>
 </project>
