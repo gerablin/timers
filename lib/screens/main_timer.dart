@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/buttons/secondary_button.dart';
 import 'package:timers/components/db/isar_db.dart';
@@ -27,6 +28,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   int? currentTimer;
   late List<Pair<int, bool>> timers = List.empty();
   late int text;
+  bool isWorkoutFinished = false;
 
   @override
   void initState() {
@@ -44,6 +46,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
       duration: Duration(seconds: currentTimer!),
     );
     _setupNextTimer();
+    _resetTimer();
   }
 
   void _setupNextTimer() {
@@ -55,9 +58,16 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
         timers.removeAt(0);
       } else {
         //TODO handle finish
-        debugPrint("WORKOUT DONE");
+        setState(() {
+          isWorkoutFinished = true;
+          debugPrint("WORKOUT DONE");
+        });
       }
-      _resetTimer();
+    });
+    setState(() {
+      Future.delayed(Duration(milliseconds: 200));
+      _startPauseTimer();
+      _startPauseTimer();
     });
   }
 
@@ -68,20 +78,27 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
     });
   }
 
-  void _resetTimer() {
+  void _resetTimer({bool autoPlay = false}) {
     setState(() {
       _controller!.reset();
       _controller!.stop();
       isPlaying = false;
+      // debugPrint("is autoplay $autoPlay");
+      // if (autoPlay) {
+      //   _startPauseTimer();
+      // }
     });
   }
 
-  void _onTimerUpdate(double value) {
+  void _onTimerUpdate(double value, {bool autoPlay = false}) {
     setState(() {
       if (value != 0.0) {
         text = value.toInt();
         debugPrint("ontimer update with $value");
         progress = value / currentTimer!;
+        if (autoPlay) {
+          _startPauseTimer();
+        }
       }
     });
   }
@@ -108,45 +125,57 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
                     value: progress,
                   ),
                 ),
-                if(_controller == null || currentTimer == null) Center(
-                  child: CircularProgressIndicator(),
-                )
-                else Countdown(
-                  seconds: currentTimer!,
-                  build: (BuildContext context, double time) {
-                    return Text(text.toString(),
-                        style: TextStyle(fontSize: 24));
-                  },
-                  onTimerUpdate: _onTimerUpdate,
-                  animationController: _controller,
-                  onFinished: _setupNextTimer,
-                ),
+                if (_controller == null || currentTimer == null)
+                  Center(
+                    child: CircularProgressIndicator(),
+                  )
+                else if (isWorkoutFinished)
+                  Text("Workout Finished")
+                else
+                  Countdown(
+                    seconds: currentTimer!,
+                    build: (BuildContext context, double time) {
+                      return Text(text.toString(),
+                          style: TextStyle(fontSize: 24));
+                    },
+                    onTimerUpdate: _onTimerUpdate,
+                    animationController: _controller,
+                    onFinished: _setupNextTimer,
+                  ),
               ],
             ),
           ),
-          buildButtons()
+          buildButtons(isWorkoutFinished)
         ],
       ),
     );
   }
 
-  Padding buildButtons() {
+  Padding buildButtons(bool isWorkoutFinished) {
     return Padding(
       padding: EdgeInsets.symmetric(
           vertical: SizeConfig.blockSizeVertical * 4,
           horizontal: SizeConfig.blockSizeHorizontal * 4),
       child: Column(
         children: [
-          MainButton(
+         if(!isWorkoutFinished) MainButton(
             text: isPlaying ? "Stop" : "Start",
             callback: _startPauseTimer,
           ),
-          SecondaryButton(
+          if(!isWorkoutFinished) SecondaryButton(
             callback: _resetTimer,
             text: "Reset",
           )
+          else MainButton(
+            text: "Go Back",
+            callback: () => _navigateBackToOverview(context),
+          ),
         ],
       ),
     );
+  }
+
+  _navigateBackToOverview(BuildContext context) {
+    context.pop(context);
   }
 }

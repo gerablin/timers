@@ -54,6 +54,7 @@ class _CountdownState extends State<Countdown> with TickerProviderStateMixin {
               end: 0.0,
             ).animate(_controller);
             _controller.reset();
+            _controller.forward();
           }
         }
       });
