@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:timers/screens/overview/components/create_timer_inputs.dart';
 import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/utils/size_config.dart';
-void showCreateTimerBottomSheet(BuildContext context,IsarDb db) {
+
+void showCreateTimerBottomSheet(BuildContext context, IsarDb db) {
   final TextEditingController workoutTimeController = TextEditingController();
   final TextEditingController restTimeController = TextEditingController();
   final TextEditingController runsController = TextEditingController();
@@ -17,7 +18,8 @@ void showCreateTimerBottomSheet(BuildContext context,IsarDb db) {
               top: SizeConfig.blockSizeVertical * 3,
               left: SizeConfig.blockSizeHorizontal * 2,
               right: SizeConfig.blockSizeHorizontal * 2,
-              bottom: MediaQuery.of(context).viewInsets.bottom),
+              bottom: (MediaQuery.of(context).viewInsets.bottom) +
+                  SizeConfig.blockSizeVertical * 3),
           child: SizedBox(
             width: double.infinity,
             child: CreateTimerInputs(

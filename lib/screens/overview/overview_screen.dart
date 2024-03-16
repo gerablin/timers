@@ -16,7 +16,9 @@ class OverviewScreen extends StatelessWidget {
 
   final IsarDb db = IsarDb();
 
-  void _openCreateTimerSheet(BuildContext context,) {
+  void _openCreateTimerSheet(
+    BuildContext context,
+  ) {
     showCreateTimerBottomSheet(context, db);
   }
 
@@ -25,26 +27,27 @@ class OverviewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Dein Timer"),
+        title: const Text("Workouts"),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Text("welcome"),
-            WorkoutList(
-              db: db,
-            )
-          ],
+        child: Padding(
+          padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 2),
+          child: Column(
+            children: [
+              WorkoutList(
+                db: db,
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _openCreateTimerSheet(context),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
 }
-
 
 class WorkoutCard extends StatelessWidget {
   const WorkoutCard({
@@ -58,27 +61,49 @@ class WorkoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onClick,
       child: Card(
           child: Padding(
-        padding: EdgeInsets.symmetric(
-            vertical: SizeConfig.blockSizeVertical,
-            horizontal: SizeConfig.blockSizeHorizontal * 4),
+        padding: EdgeInsets.only(
+            top: SizeConfig.blockSizeVertical,
+            bottom: SizeConfig.blockSizeVertical * 2,
+            left: SizeConfig.blockSizeHorizontal * 4,
+            right: SizeConfig.blockSizeHorizontal * 4),
         child: Column(
           children: [
+            Text("${workout.runs} Runs"),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("workout"),
-                Text("${workout.workoutCountDown} seconds")
+                const Row(
+                  children: [
+                    Icon(
+                      Icons.local_fire_department_outlined,
+                      color: Colors.deepOrangeAccent,
+                    ),
+                    Text("Time"),
+                  ],
+                ),
+                Text("${workout.workoutCountDown} s")
               ],
             ),
+            Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 0.5)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("rest"),
-                Text("${workout.restCountDown} seconds")
+                const Row(
+                  children: [
+                    Icon(
+                      Icons.ac_unit_outlined,
+                      color: Colors.indigoAccent,
+                    ),
+                    Text("Time"),
+                  ],
+                ),
+                Text("${workout.restCountDown} s")
               ],
             )
           ],

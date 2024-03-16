@@ -4,6 +4,7 @@ import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/models/timer.dart';
 import 'package:timers/screens/main_timer.dart';
 import 'package:timers/screens/overview/overview_screen.dart';
+import 'package:timers/utils/app_theme.dart';
 import 'package:timers/utils/size_config.dart';
 
 void main() {
@@ -14,7 +15,8 @@ void main() {
 Future<void> initDatabaseIsar() async {
   WorkoutTimer workoutTimer =
   WorkoutTimer(workoutCountDown: 2, restCountDown: 1, runs: 3);
-  await IsarDb().cleanDb();
+  // comment in to reset DB
+  // await IsarDb().cleanDb();
   await IsarDb().saveWorkout(workoutTimer);
 }
 
@@ -48,10 +50,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: _router,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.themeData,
     );
   }
 }

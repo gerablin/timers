@@ -54,13 +54,10 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
       if (timers.isNotEmpty) {
         currentTimer = timers[0].first;
         _controller?.duration = Duration(seconds: currentTimer!);
-        debugPrint(" new controller start time: ${_controller!.duration}");
         timers.removeAt(0);
       } else {
-        //TODO handle finish
         setState(() {
           isWorkoutFinished = true;
-          debugPrint("WORKOUT DONE");
         });
       }
     });
@@ -83,10 +80,6 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
       _controller!.reset();
       _controller!.stop();
       isPlaying = false;
-      // debugPrint("is autoplay $autoPlay");
-      // if (autoPlay) {
-      //   _startPauseTimer();
-      // }
     });
   }
 
@@ -94,7 +87,6 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
     setState(() {
       if (value != 0.0) {
         text = value.toInt();
-        debugPrint("ontimer update with $value");
         progress = value / currentTimer!;
         if (autoPlay) {
           _startPauseTimer();
