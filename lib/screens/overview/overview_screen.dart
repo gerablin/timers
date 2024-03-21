@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
-import 'package:isar/isar.dart';
-import 'package:timers/components/buttons/main_button.dart';
+import 'package:timers/components/icons/cooldown_icon.dart';
 import 'package:timers/components/icons/fire_icon.dart';
-import 'package:timers/screens/overview/components/create_timer_inputs.dart';
 import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/screens/overview/components/workout_list.dart';
 import 'package:timers/screens/overview/create_timer_bottom_sheet.dart';
@@ -93,10 +90,7 @@ class WorkoutCard extends StatelessWidget {
               children: [
                 const Row(
                   children: [
-                    Icon(
-                      Icons.ac_unit_outlined,
-                      color: Colors.indigoAccent,
-                    ),
+                   CooldownIcon(),
                     Text("Time"),
                   ],
                 ),

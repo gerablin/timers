@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="adjusted styles and layouts">
+    <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="swipe to delete">
+      <change afterPath="$PROJECT_DIR$/lib/components/icons/cooldown_icon.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/utils/strings.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/components/db/isar_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/db/isar_db.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/timer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/main_timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/main_timer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/overview/overview_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/overview_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +170,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711009740729</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="swipe to delete">
+      <option name="closed" value="true" />
+      <created>1711015962177</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1711015962177</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -186,6 +197,7 @@
     <MESSAGE value="autoplay when finished" />
     <MESSAGE value="add new theme" />
     <MESSAGE value="adjusted styles and layouts" />
-    <option name="LAST_COMMIT_MESSAGE" value="adjusted styles and layouts" />
+    <MESSAGE value="swipe to delete" />
+    <option name="LAST_COMMIT_MESSAGE" value="swipe to delete" />
   </component>
 </project>

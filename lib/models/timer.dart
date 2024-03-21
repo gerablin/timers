@@ -20,6 +20,7 @@ class WorkoutTimer {
 }
 
 extension CountdownListExtension on WorkoutTimer {
+  // Pair of Countdown and if it is a rest timer
   List<Pair<int, bool>> generateCountdowns() {
     List<Pair<int, bool>> countdowns = [];
 
