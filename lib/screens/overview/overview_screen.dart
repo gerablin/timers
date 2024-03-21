@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:isar/isar.dart';
 import 'package:timers/components/buttons/main_button.dart';
+import 'package:timers/components/icons/fire_icon.dart';
 import 'package:timers/screens/overview/components/create_timer_inputs.dart';
 import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/screens/overview/components/workout_list.dart';
@@ -26,7 +27,6 @@ class OverviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Workouts"),
       ),
       body: SingleChildScrollView(
@@ -78,10 +78,7 @@ class WorkoutCard extends StatelessWidget {
               children: [
                 const Row(
                   children: [
-                    Icon(
-                      Icons.local_fire_department_outlined,
-                      color: Colors.deepOrangeAccent,
-                    ),
+                    FireIcon(),
                     Text("Time"),
                   ],
                 ),

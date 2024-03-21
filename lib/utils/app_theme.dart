@@ -28,6 +28,10 @@ class AppTheme {
       cardTheme: myCardTheme(),
       floatingActionButtonTheme: myFloatingActionButtonTheme(),
       bottomSheetTheme: myBottomSheetThemeData(),
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColors.darkBackground,
+      foregroundColor: AppColors.white
+    )
 
   );
 
@@ -80,7 +84,7 @@ class MyElevatedButtonThemeData {
       ),
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(50),
         ),
       ),
     ),

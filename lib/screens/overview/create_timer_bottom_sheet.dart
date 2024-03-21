@@ -11,11 +11,11 @@ void showCreateTimerBottomSheet(BuildContext context, IsarDb db) {
   showModalBottomSheet(
       useRootNavigator: true,
       isScrollControlled: true,
+      showDragHandle: true,
       context: context,
       builder: (context) {
         return Padding(
           padding: EdgeInsets.only(
-              top: SizeConfig.blockSizeVertical * 3,
               left: SizeConfig.blockSizeHorizontal * 2,
               right: SizeConfig.blockSizeHorizontal * 2,
               bottom: (MediaQuery.of(context).viewInsets.bottom) +

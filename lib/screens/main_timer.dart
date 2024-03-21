@@ -5,6 +5,7 @@ import 'package:timers/components/buttons/secondary_button.dart';
 import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/components/timer/countdown.dart';
 import 'package:timers/models/timer.dart';
+import 'package:timers/utils/app_colors.dart';
 import 'package:timers/utils/size_config.dart';
 
 class MainTimer extends StatefulWidget {
@@ -99,8 +100,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Runde X"),
+        title: const Text("Timer"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,6 +115,10 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
                   width: SizeConfig.blockSizeHorizontal * 80,
                   child: CircularProgressIndicator(
                     value: progress,
+                    color: AppColors.accentColor,
+                    strokeWidth: 10.0,
+                    strokeCap: StrokeCap.round,
+                    backgroundColor: AppColors.lightBackgroundColor,
                   ),
                 ),
                 if (_controller == null || currentTimer == null)
@@ -128,7 +132,8 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
                     seconds: currentTimer!,
                     build: (BuildContext context, double time) {
                       return Text(text.toString(),
-                          style: TextStyle(fontSize: 24));
+                          style: TextStyle(fontSize: 48,
+                          fontWeight: FontWeight.w700));
                     },
                     onTimerUpdate: _onTimerUpdate,
                     animationController: _controller,

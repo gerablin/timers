@@ -17,7 +17,7 @@ Future<void> initDatabaseIsar() async {
   WorkoutTimer(workoutCountDown: 2, restCountDown: 1, runs: 3);
   // comment in to reset DB
   // await IsarDb().cleanDb();
-  await IsarDb().saveWorkout(workoutTimer);
+  // await IsarDb().saveWorkout(workoutTimer);
 }
 
 late SizeConfig sizeConfig;
