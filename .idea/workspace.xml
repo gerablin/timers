@@ -5,17 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="adjusted styles and layouts">
-      <change afterPath="$PROJECT_DIR$/assets/sounds/ding.m4a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/main_timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/main_timer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/components/db/isar_db.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/db/isar_db.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,13 +70,14 @@
     "git-widget-placeholder": "main",
     "io.flutter.reload.alreadyRun": "true",
     "last_directory_selection": "/Users/geradev/Developer/Projects/FlutterProjects/timers/lib",
-    "last_opened_file_path": "/Users/geradev/Developer/Projects/FlutterProjects/timers/lib/assets/sounds",
+    "last_opened_file_path": "/Users/geradev/Developer/Projects/FlutterProjects/timers/assets/sounds",
     "settings.editor.selected.configurable": "flutter.settings",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/sounds" />
       <recent name="$PROJECT_DIR$/lib/assets/sounds" />
     </key>
     <key name="MoveFile.RECENT_KEYS">

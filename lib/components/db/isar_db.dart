@@ -14,6 +14,11 @@ class IsarDb {
     isar.writeTxn(() => isar.workoutTimers.put(timer));
   }
 
+  Future<void> deleteWorkout(int id) async {
+    final isar = await db;
+    isar.writeTxn(() => isar.workoutTimers.delete(id));
+  }
+
   Future<Isar> openDB() async {
     final dir = await getApplicationDocumentsDirectory();
 

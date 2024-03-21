@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:timers/components/db/isar_db.dart';
@@ -17,30 +18,40 @@ class WorkoutList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-      EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 4),
-      child: Column(
-        children: [
-          StreamBuilder(
-              stream: db.listenToWorkoutTimers(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) return Text(snapshot.error.toString());
+          EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 4),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            StreamBuilder(
+                stream: db.listenToWorkoutTimers(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) return Text(snapshot.error.toString());
 
-                if (snapshot.hasData) {
-                  final List<WorkoutCard> workoutCards = [];
-                  final workouts = snapshot.data;
-                  for (var workout in workouts!) {
-                    workoutCards.add(WorkoutCard(
-                      workout: workout,
-                      onClick:() => _navigateToWorkout(context,workout.id),
-                    ));
+                  if (snapshot.hasData) {
+                    final List<Widget> workoutCards = [];
+                    final workouts = snapshot.data;
+                    for (var workout in workouts!) {
+                      workoutCards.add(
+                        Dismissible(
+                          key: Key(workout.id.toString()),
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (_) => {db.deleteWorkout(workout.id)},
+                          child: WorkoutCard(
+                            workout: workout,
+                            onClick: () =>
+                                _navigateToWorkout(context, workout.id),
+                          ),
+                        ),
+                      );
+                    }
+                    return Column(
+                      children: [...workoutCards],
+                    );
                   }
-                  return Column(
-                    children: [...workoutCards],
-                  );
-                }
-                return const Center(child: CircularProgressIndicator());
-              }),
-        ],
+                  return const Center(child: CircularProgressIndicator());
+                }),
+          ],
+        ),
       ),
     );
   }
