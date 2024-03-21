@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:timers/components/buttons/main_button.dart';
@@ -30,14 +31,16 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   late List<Pair<int, bool>> timers = List.empty();
   late int text;
   bool isWorkoutFinished = false;
+  AudioPlayer player = AudioPlayer();
 
   @override
   void initState() {
-    _fetchWorkoutTimer();
+    _initFirstTimer();
     super.initState();
   }
 
-  void _fetchWorkoutTimer() async {
+  void _initFirstTimer() async {
+    await player.setSource(AssetSource('sounds/ding.m4a'));
     final workoutTimer = await widget.db.getWorkoutTimerById(widget.workoutId);
     timers = workoutTimer!.generateCountdowns();
     currentTimer = timers[0].first;
@@ -46,26 +49,31 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
       vsync: this,
       duration: Duration(seconds: currentTimer!),
     );
-    _setupNextTimer();
+    timers.removeAt(0);
     _resetTimer();
   }
 
   void _setupNextTimer() {
+    player.resume();
     setState(() {
       if (timers.isNotEmpty) {
         currentTimer = timers[0].first;
         _controller?.duration = Duration(seconds: currentTimer!);
         timers.removeAt(0);
       } else {
-        setState(() {
-          isWorkoutFinished = true;
-        });
+        _workoutFinished();
       }
     });
     setState(() {
       Future.delayed(Duration(milliseconds: 200));
       _startPauseTimer();
       _startPauseTimer();
+    });
+  }
+
+  void _workoutFinished() {
+        setState(() {
+      isWorkoutFinished = true;
     });
   }
 
@@ -96,6 +104,11 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
     });
   }
 
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
