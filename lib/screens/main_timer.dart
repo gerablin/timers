@@ -11,6 +11,7 @@ import 'package:timers/models/timer.dart';
 import 'package:timers/utils/app_colors.dart';
 import 'package:timers/utils/size_config.dart';
 import 'package:timers/utils/strings.dart' as Strings;
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class MainTimer extends StatefulWidget {
   MainTimer({
@@ -40,6 +41,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    WakelockPlus.enable();
     _initFirstTimer();
     super.initState();
   }
@@ -120,6 +122,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    WakelockPlus.disable();
     player.dispose();
     super.dispose();
   }

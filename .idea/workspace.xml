@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="swipe to delete">
-      <change afterPath="$PROJECT_DIR$/lib/components/icons/cooldown_icon.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/utils/strings.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/timer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/main_timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/main_timer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/overview/overview_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/overview_screen.dart" afterDir="false" />
-    </list>
+    <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="added subtitles; String consts" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,6 +62,7 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
     "io.flutter.reload.alreadyRun": "true",
@@ -178,7 +172,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711015962177</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="added subtitles; String consts">
+      <option name="closed" value="true" />
+      <created>1711037542282</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1711037542282</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -198,6 +200,7 @@
     <MESSAGE value="add new theme" />
     <MESSAGE value="adjusted styles and layouts" />
     <MESSAGE value="swipe to delete" />
-    <option name="LAST_COMMIT_MESSAGE" value="swipe to delete" />
+    <MESSAGE value="added subtitles; String consts" />
+    <option name="LAST_COMMIT_MESSAGE" value="added subtitles; String consts" />
   </component>
 </project>
