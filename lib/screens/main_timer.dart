@@ -39,6 +39,10 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   String timerSubtitle = Strings.timerSubtitleWorkout;
   Widget timerIcon = const FireIcon();
 
+  // subtitle helper properties
+  String runs = "";
+  int currentRun = 1;
+  //////////////////
   @override
   void initState() {
     WakelockPlus.enable();
@@ -49,6 +53,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   void _initFirstTimer() async {
     player.setSource(AssetSource('sounds/ding.m4a'));
     final workoutTimer = await widget.db.getWorkoutTimerById(widget.workoutId);
+
     timers = workoutTimer!.generateCountdowns();
     currentTimer = timers[0].first;
     text = currentTimer!;
@@ -56,6 +61,8 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
       vsync: this,
       duration: Duration(seconds: currentTimer!),
     );
+    runs = workoutTimer.runs.toString();
+    _updateTimerSubtitle();
     timers.removeAt(0);
     _resetTimer();
   }
@@ -113,11 +120,13 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   }
 
   void _updateTimerSubtitle() {
+    String workoutAmount = "(${currentRun.toString()}/$runs)";
     bool isRestTimer = timers.first.second;
     timerSubtitle =
-        isRestTimer ? Strings.timerSubtitleRest : Strings.timerSubtitleWorkout;
+        isRestTimer ? Strings.timerSubtitleRest : ("${Strings.timerSubtitleWorkout} $workoutAmount" );
 
     timerIcon = isRestTimer ? const CooldownIcon() : const FireIcon();
+    if(!isRestTimer) currentRun++;
   }
 
   @override
