@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:timers/models/timer.dart';
+import 'package:timers/models/workout_timer.dart';
 
 class IsarDb {
   late Future<Isar> db;

@@ -7,7 +7,7 @@ import 'package:timers/screens/overview/components/workout_list.dart';
 import 'package:timers/screens/overview/create_timer_bottom_sheet.dart';
 import 'package:timers/utils/size_config.dart';
 
-import '../../models/timer.dart';
+import '../../models/workout_timer.dart';
 
 class OverviewScreen extends StatelessWidget {
   OverviewScreen({super.key});

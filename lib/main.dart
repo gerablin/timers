@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:timers/components/db/isar_db.dart';
-import 'package:timers/models/timer.dart';
+import 'package:timers/models/workout_timer.dart';
 import 'package:timers/screens/main_timer.dart';
 import 'package:timers/screens/overview/overview_screen.dart';
 import 'package:timers/utils/app_theme.dart';

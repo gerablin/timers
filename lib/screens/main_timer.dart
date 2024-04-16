@@ -7,11 +7,13 @@ import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/components/icons/cooldown_icon.dart';
 import 'package:timers/components/icons/fire_icon.dart';
 import 'package:timers/components/timer/countdown.dart';
-import 'package:timers/models/timer.dart';
+import 'package:timers/models/workout_timer.dart';
 import 'package:timers/utils/app_colors.dart';
 import 'package:timers/utils/size_config.dart';
 import 'package:timers/utils/strings.dart' as Strings;
 import 'package:wakelock_plus/wakelock_plus.dart';
+
+import 'overview/components/edit_timer_bottom_sheet.dart';
 
 class MainTimer extends StatefulWidget {
   MainTimer({
@@ -42,6 +44,8 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   // subtitle helper properties
   String runs = "";
   int currentRun = 1;
+  late WorkoutTimer? workoutTimer;
+
   //////////////////
   @override
   void initState() {
@@ -52,7 +56,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
 
   void _initFirstTimer() async {
     player.setSource(AssetSource('sounds/ding.m4a'));
-    final workoutTimer = await widget.db.getWorkoutTimerById(widget.workoutId);
+    workoutTimer = await widget.db.getWorkoutTimerById(widget.workoutId);
 
     timers = workoutTimer!.generateCountdowns();
     currentTimer = timers[0].first;
@@ -61,7 +65,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
       vsync: this,
       duration: Duration(seconds: currentTimer!),
     );
-    runs = workoutTimer.runs.toString();
+    runs = workoutTimer?.runs.toString() ?? "";
     _updateTimerSubtitle();
     timers.removeAt(0);
     _resetTimer();
@@ -122,11 +126,12 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   void _updateTimerSubtitle() {
     String workoutAmount = "(${currentRun.toString()}/$runs)";
     bool isRestTimer = timers.first.second;
-    timerSubtitle =
-        isRestTimer ? Strings.timerSubtitleRest : ("${Strings.timerSubtitleWorkout} $workoutAmount" );
+    timerSubtitle = isRestTimer
+        ? Strings.timerSubtitleRest
+        : ("${Strings.timerSubtitleWorkout} $workoutAmount");
 
     timerIcon = isRestTimer ? const CooldownIcon() : const FireIcon();
-    if(!isRestTimer) currentRun++;
+    if (!isRestTimer) currentRun++;
   }
 
   @override
@@ -139,8 +144,19 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text(Strings.mainTimerAppBar),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit), // Use the edit icon
+            onPressed: () {
+              if (workoutTimer != null)
+                showEditTimerBottomSheet(context, widget.db, workoutTimer!);
+              // Add your onPressed callback here
+            },
+          ),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
