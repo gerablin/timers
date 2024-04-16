@@ -79,7 +79,7 @@ class WorkoutCard extends StatelessWidget {
                     Text("Time"),
                   ],
                 ),
-                Text("${workout.workoutCountDown} s")
+                WorkoutTimeText(workout: workout)
               ],
             ),
             Padding(
@@ -101,5 +101,32 @@ class WorkoutCard extends StatelessWidget {
         ),
       )),
     );
+  }
+}
+
+class WorkoutTimeText extends StatelessWidget {
+  const WorkoutTimeText({
+    super.key,
+    required this.workout,
+  });
+
+  final WorkoutTimer workout;
+
+  String getWorkoutTimerText() {
+    String text = "";
+    if(workout.workoutDurations.isEmpty){
+      return "${workout.workoutCountDown} s";
+    }
+    else{
+      for(var i= 0; i< workout.workoutDurations.length; i++){
+        if(i != 0) text = text + ", ";
+        text = text + "${workout.workoutDurations[i]} s";
+      }
+    }
+    return text;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Text(getWorkoutTimerText());
   }
 }
