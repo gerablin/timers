@@ -2,16 +2,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:timers/components/db/isar_db.dart';
+import 'package:timers/components/icons/cooldown_icon.dart';
+import 'package:timers/components/icons/fire_icon.dart';
+import 'package:timers/models/workout_timer.dart';
+import 'package:timers/screens/overview/components/edit_timer_bottom_sheet.dart';
 import 'package:timers/screens/overview/overview_screen.dart';
 import 'package:timers/utils/size_config.dart';
 
 class WorkoutList extends StatelessWidget {
-  const WorkoutList({super.key, required this.db});
+  const WorkoutList({
+    super.key,
+    required this.db,
+    this.isEditMode = false,
+  });
 
   final IsarDb db;
+  final bool isEditMode;
 
   void _navigateToWorkout(BuildContext context, int id) {
     context.push('/timer/${id.toString()}');
+  }
+
+  void _onWorkoutClicked(BuildContext context, WorkoutTimer workoutTimer) {
+    if (isEditMode) {
+      showEditTimerBottomSheet(context, db, workoutTimer);
+    } else {
+      _navigateToWorkout(context, workoutTimer.id);
+    }
   }
 
   @override
@@ -37,10 +54,10 @@ class WorkoutList extends StatelessWidget {
                           direction: DismissDirection.endToStart,
                           onDismissed: (_) => {db.deleteWorkout(workout.id)},
                           child: WorkoutCard(
-                            workout: workout,
-                            onClick: () =>
-                                _navigateToWorkout(context, workout.id),
-                          ),
+                              workout: workout,
+                              isEditMode: isEditMode,
+                              onClick: () =>
+                                  _onWorkoutClicked(context, workout)),
                         ),
                       );
                     }
@@ -54,5 +71,116 @@ class WorkoutList extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class WorkoutCard extends StatelessWidget {
+  const WorkoutCard({
+    super.key,
+    required this.workout,
+    required this.onClick,
+    required this.isEditMode,
+  });
+
+  final VoidCallback onClick;
+  final WorkoutTimer workout;
+  final bool isEditMode;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: GestureDetector(
+        onTap: onClick,
+        child: Stack(
+          children: [
+            Card(
+              child: Padding(
+                padding: EdgeInsets.only(
+                    top: SizeConfig.blockSizeVertical,
+                    bottom: SizeConfig.blockSizeVertical * 2,
+                    left: SizeConfig.blockSizeHorizontal * 4,
+                    right: SizeConfig.blockSizeHorizontal * 4),
+                child: Column(
+                  children: [
+                    Text("${workout.runs} Runs"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Row(
+                          children: [
+                            FireIcon(),
+                            Text("Time"),
+                          ],
+                        ),
+                        WorkoutTimeText(workout: workout)
+                      ],
+                    ),
+                    Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: SizeConfig.blockSizeVertical * 0.5)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Row(
+                          children: [
+                            CooldownIcon(),
+                            Text("Time"),
+                          ],
+                        ),
+                        Text("${workout.restCountDown} s")
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            if (isEditMode)
+              Positioned.fill(
+                child: Card(
+                  color: Colors.black.withOpacity(0.5),
+                  child: const Center(
+                    child: Text(
+                      'Click to Edit',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class WorkoutTimeText extends StatelessWidget {
+  const WorkoutTimeText({
+    super.key,
+    required this.workout,
+  });
+
+  final WorkoutTimer workout;
+
+  String getWorkoutTimerText() {
+    String text = "";
+    if (workout.workoutDurations.isEmpty) {
+      return "${workout.workoutCountDown} s";
+    } else {
+      for (var i = 0; i < workout.workoutDurations.length; i++) {
+        if (i != 0) text = text + ", ";
+        text = text + "${workout.workoutDurations[i]} s";
+      }
+    }
+    return text;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(getWorkoutTimerText());
   }
 }

@@ -9,10 +9,17 @@ import 'package:timers/utils/size_config.dart';
 
 import '../../models/workout_timer.dart';
 
-class OverviewScreen extends StatelessWidget {
+class OverviewScreen extends StatefulWidget {
   OverviewScreen({super.key});
 
+  @override
+  State<OverviewScreen> createState() => _OverviewScreenState();
+}
+
+class _OverviewScreenState extends State<OverviewScreen> {
   final IsarDb db = IsarDb();
+
+   bool isEditMode = false;
 
   void _openCreateTimerSheet(
     BuildContext context,
@@ -20,11 +27,25 @@ class OverviewScreen extends StatelessWidget {
     showCreateTimerBottomSheet(context, db);
   }
 
+  void _toggleEditMode() {
+    setState(() {
+      isEditMode = !isEditMode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Workouts"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit), // Use the edit icon
+            onPressed: () {
+              _toggleEditMode();
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -33,6 +54,7 @@ class OverviewScreen extends StatelessWidget {
             children: [
               WorkoutList(
                 db: db,
+                isEditMode: isEditMode,
               )
             ],
           ),
@@ -43,90 +65,5 @@ class OverviewScreen extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
     );
-  }
-}
-
-class WorkoutCard extends StatelessWidget {
-  const WorkoutCard({
-    super.key,
-    required this.workout,
-    required this.onClick,
-  });
-
-  final VoidCallback onClick;
-  final WorkoutTimer workout;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onClick,
-      child: Card(
-          child: Padding(
-        padding: EdgeInsets.only(
-            top: SizeConfig.blockSizeVertical,
-            bottom: SizeConfig.blockSizeVertical * 2,
-            left: SizeConfig.blockSizeHorizontal * 4,
-            right: SizeConfig.blockSizeHorizontal * 4),
-        child: Column(
-          children: [
-            Text("${workout.runs} Runs"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Row(
-                  children: [
-                    FireIcon(),
-                    Text("Time"),
-                  ],
-                ),
-                WorkoutTimeText(workout: workout)
-              ],
-            ),
-            Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.blockSizeVertical * 0.5)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Row(
-                  children: [
-                   CooldownIcon(),
-                    Text("Time"),
-                  ],
-                ),
-                Text("${workout.restCountDown} s")
-              ],
-            )
-          ],
-        ),
-      )),
-    );
-  }
-}
-
-class WorkoutTimeText extends StatelessWidget {
-  const WorkoutTimeText({
-    super.key,
-    required this.workout,
-  });
-
-  final WorkoutTimer workout;
-
-  String getWorkoutTimerText() {
-    String text = "";
-    if(workout.workoutDurations.isEmpty){
-      return "${workout.workoutCountDown} s";
-    }
-    else{
-      for(var i= 0; i< workout.workoutDurations.length; i++){
-        if(i != 0) text = text + ", ";
-        text = text + "${workout.workoutDurations[i]} s";
-      }
-    }
-    return text;
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Text(getWorkoutTimerText());
   }
 }

@@ -147,16 +147,6 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text(Strings.mainTimerAppBar),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit), // Use the edit icon
-            onPressed: () {
-              if (workoutTimer != null)
-                showEditTimerBottomSheet(context, widget.db, workoutTimer!);
-              // Add your onPressed callback here
-            },
-          ),
-        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
