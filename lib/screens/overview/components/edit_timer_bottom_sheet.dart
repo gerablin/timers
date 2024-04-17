@@ -21,17 +21,6 @@ void showEditTimerBottomSheet(
     }
   }
 
-  WorkoutTimer getUpdatedTimer() {
-    List<int> durations = [];
-    for (var i = 0; i < workoutTimer.runs; i++) {
-      if (textEditingControllers[i]?.text != null) {
-        durations.add(int.parse(textEditingControllers[i]!.text));
-      }
-    }
-    workoutTimer.workoutDurations = durations;
-    return workoutTimer;
-  }
-
   showModalBottomSheet(
       useRootNavigator: true,
       isScrollControlled: true,
@@ -39,41 +28,92 @@ void showEditTimerBottomSheet(
       context: context,
       builder: (context) {
         setupTextEditingControllers();
-        return Padding(
-          padding: EdgeInsets.only(
-              left: SizeConfig.blockSizeHorizontal * 2,
-              right: SizeConfig.blockSizeHorizontal * 2,
-              bottom: (MediaQuery.of(context).viewInsets.bottom) +
-                  SizeConfig.blockSizeVertical * 3),
-          child: SingleChildScrollView(
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (var i = 0; i < workoutTimer.runs; i++)
-                    editWorkoutCountdownTextField(textEditingControllers, i),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.blockSizeHorizontal * 2,
-                        vertical: SizeConfig.blockSizeVertical * 2),
-                    child: MainButton(
-                        text: "Save Workout",
-                        callback: () {
-                          db.saveWorkout(getUpdatedTimer());
-                          Navigator.pop(context);
-                        }),
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
+        return EditWorkoutInputs(
+            textEditingControllers: textEditingControllers,
+            workoutTimer: workoutTimer,
+            db: db);
       });
 }
 
+class EditWorkoutInputs extends StatefulWidget {
+  const EditWorkoutInputs(
+      {super.key,
+      required this.textEditingControllers,
+      required this.workoutTimer,
+      required this.db});
+
+  final WorkoutTimer workoutTimer;
+  final IsarDb db;
+  final Map<int, TextEditingController> textEditingControllers;
+
+  @override
+  State<EditWorkoutInputs> createState() => _EditWorkoutInputsState();
+}
+
+class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
+  WorkoutTimer getUpdatedTimer() {
+    List<int> durations = [];
+    for (var i = 0; i < widget.workoutTimer.runs; i++) {
+      if (widget.textEditingControllers[i]?.text != null) {
+        durations.add(int.parse(widget.textEditingControllers[i]!.text));
+      }
+    }
+    widget.workoutTimer.workoutDurations = durations;
+    return widget.workoutTimer;
+  }
+
+  bool isAnyTextFieldEmpty() {
+    for (final controller in widget.textEditingControllers.values) {
+      if (controller.text.isEmpty) {
+        return true; // Found an empty text field
+      }
+    }
+    return false; // No empty text fields found
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          left: SizeConfig.blockSizeHorizontal * 2,
+          right: SizeConfig.blockSizeHorizontal * 2,
+          bottom: (MediaQuery.of(context).viewInsets.bottom) +
+              SizeConfig.blockSizeVertical * 3),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (var i = 0; i < widget.workoutTimer.runs; i++)
+                editWorkoutCountdownTextField(
+                    widget.textEditingControllers, i, (newValue) => setState(() {
+                      print("chagned");
+                })),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.blockSizeHorizontal * 2,
+                    vertical: SizeConfig.blockSizeVertical * 2),
+                child: MainButton(
+                    isEnabled: !isAnyTextFieldEmpty(),
+                    text: "Save Workout",
+                    callback: () {
+                      widget.db.saveWorkout(getUpdatedTimer());
+                      Navigator.pop(context);
+                    }),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 Widget editWorkoutCountdownTextField(
-    Map<int, TextEditingController> textEditingControllers, int i) {
+    Map<int, TextEditingController> textEditingControllers,
+    int i,
+    Function(String) onChanged) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -81,6 +121,7 @@ Widget editWorkoutCountdownTextField(
           padding:
               EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical)),
       CupertinoTextField(
+        onChanged: onChanged,
         padding: EdgeInsets.symmetric(
             vertical: SizeConfig.blockSizeVertical * 2,
             horizontal: SizeConfig.blockSizeHorizontal * 2),

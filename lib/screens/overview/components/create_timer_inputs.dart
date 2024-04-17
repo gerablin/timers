@@ -52,23 +52,24 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
           child: Column(
             children: [
               CupertinoTextField(
-                padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.blockSizeVertical * 2,
-                    horizontal: SizeConfig.blockSizeHorizontal * 2),
-                controller: widget.workoutNameController,
-                placeholder: "Enter a name",
-                placeholderStyle:
-                    TextStyle(color: AppColors.lightBackgroundColor),
-                keyboardType: TextInputType.number,
+                  onChanged: (newValue) => setState(() {}),
+                  padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.blockSizeVertical * 2,
+                      horizontal: SizeConfig.blockSizeHorizontal * 2),
+                  controller: widget.workoutNameController,
+                  placeholder: "Enter a name",
+                  placeholderStyle:
+                      TextStyle(color: AppColors.lightBackgroundColor),
+                  keyboardType: TextInputType.number,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(30),
-                  ]
-              ),
+                  ]),
               Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: SizeConfig.blockSizeVertical)),
 
               CupertinoTextField(
+                onChanged: (newValue) => setState(() {}),
                 padding: EdgeInsets.symmetric(
                     vertical: SizeConfig.blockSizeVertical * 2,
                     horizontal: SizeConfig.blockSizeHorizontal * 2),
@@ -87,6 +88,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
 
               // rest time
               CupertinoTextField(
+                onChanged: (newValue) => setState(() {}),
                 padding: EdgeInsets.symmetric(
                     vertical: SizeConfig.blockSizeVertical * 2,
                     horizontal: SizeConfig.blockSizeHorizontal * 2),
@@ -105,6 +107,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
 
               // runs
               CupertinoTextField(
+                onChanged: (newValue) => setState(() {}),
                 padding: EdgeInsets.symmetric(
                     vertical: SizeConfig.blockSizeVertical * 2,
                     horizontal: SizeConfig.blockSizeHorizontal * 2),
@@ -125,25 +128,28 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
               horizontal: SizeConfig.blockSizeHorizontal * 2),
           child: MainButton(
               text: "Create Workout",
+              isEnabled: areAllFieldsFilled(),
               callback: () {
-                if (widget.workoutNameController.text.isNotEmpty &&
-                    widget.workoutTimeController.text.isNotEmpty &&
-                    widget.restTimeController.text.isNotEmpty &&
-                    widget.runsController.text.isNotEmpty) {
+                if (areAllFieldsFilled()) {
                   widget.db.saveWorkout(WorkoutTimer(
-                    name: widget.workoutNameController.text,
+                      name: widget.workoutNameController.text,
                       workoutCountDown:
                           int.parse(widget.workoutTimeController.text),
                       restCountDown: int.parse(widget.restTimeController.text),
                       runs: int.parse(widget.runsController.text)));
                   Navigator.pop(context);
-                } else {
-                  //TODO: show error in sheet
                 }
               }),
         )
       ],
     );
+  }
+
+  bool areAllFieldsFilled() {
+    return widget.workoutNameController.text.isNotEmpty &&
+        widget.workoutTimeController.text.isNotEmpty &&
+        widget.restTimeController.text.isNotEmpty &&
+        widget.runsController.text.isNotEmpty;
   }
 }
 

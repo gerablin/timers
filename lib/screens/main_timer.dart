@@ -213,6 +213,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
             MainButton(
               text: isPlaying ? Strings.stopTimer : Strings.startTimer,
               callback: _startPauseTimer,
+              isEnabled: true,
             ),
           if (!isWorkoutFinished)
             SecondaryButton(
@@ -223,6 +224,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
             MainButton(
               text: Strings.goBack,
               callback: () => _navigateBackToOverview(context),
+              isEnabled: true,
             ),
         ],
       ),

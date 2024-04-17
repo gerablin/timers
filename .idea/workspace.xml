@@ -11,11 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="move edit workouts to overview">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/workout_timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/workout_timer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/workout_timer.g.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/components/buttons/main_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/buttons/main_button.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/main_timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/main_timer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/create_timer_inputs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/create_timer_inputs.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/overview/create_timer_bottom_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/create_timer_bottom_sheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/edit_timer_bottom_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/edit_timer_bottom_sheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

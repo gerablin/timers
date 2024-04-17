@@ -7,6 +7,7 @@ import 'package:timers/components/icons/fire_icon.dart';
 import 'package:timers/models/workout_timer.dart';
 import 'package:timers/screens/overview/components/edit_timer_bottom_sheet.dart';
 import 'package:timers/screens/overview/overview_screen.dart';
+import 'package:timers/utils/app_colors.dart';
 import 'package:timers/utils/size_config.dart';
 
 class WorkoutList extends StatelessWidget {
@@ -103,34 +104,33 @@ class WorkoutCard extends StatelessWidget {
                     right: SizeConfig.blockSizeHorizontal * 4),
                 child: Column(
                   children: [
-                    Text("${workout.runs} Runs"),
+                    Text(
+                      workout.name,
+                      style: TextStyle(fontSize: 20.0, letterSpacing: 1.2),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Row(
                           children: [
-                            FireIcon(),
-                            Text("Time"),
+                            Icon(
+                              Icons.directions_run_outlined,
+                              color: AppColors.accentColor,
+                            ),
+                            Text("Runs"),
                           ],
                         ),
-                        WorkoutTimeText(workout: workout)
+                        Text("${workout.runs}")
                       ],
                     ),
                     Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: SizeConfig.blockSizeVertical * 0.5)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Row(
-                          children: [
-                            CooldownIcon(),
-                            Text("Time"),
-                          ],
-                        ),
-                        Text("${workout.restCountDown} s")
-                      ],
-                    )
+                    WorkoutTimeRow(workout: workout),
+                    Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: SizeConfig.blockSizeVertical * 0.5)),
+                    RestTimeRow(workout: workout)
                   ],
                 ),
               ),
@@ -154,6 +154,56 @@ class WorkoutCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class RestTimeRow extends StatelessWidget {
+  const RestTimeRow({
+    super.key,
+    required this.workout,
+  });
+
+  final WorkoutTimer workout;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Row(
+          children: [
+            CooldownIcon(),
+            Text("Time"),
+          ],
+        ),
+        Text("${workout.restCountDown} s")
+      ],
+    );
+  }
+}
+
+class WorkoutTimeRow extends StatelessWidget {
+  const WorkoutTimeRow({
+    super.key,
+    required this.workout,
+  });
+
+  final WorkoutTimer workout;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Row(
+          children: [
+            FireIcon(),
+            Text("Time"),
+          ],
+        ),
+        WorkoutTimeText(workout: workout)
+      ],
     );
   }
 }
