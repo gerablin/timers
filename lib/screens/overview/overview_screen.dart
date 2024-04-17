@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:timers/components/db/isar_db.dart';
+import 'package:timers/screens/overview/components/app_drawer.dart';
 import 'package:timers/screens/overview/components/workout_list.dart';
 import 'package:timers/screens/overview/create_timer_bottom_sheet.dart';
 import 'package:timers/utils/app_colors.dart';
@@ -110,39 +111,5 @@ class _OverviewScreenState extends State<OverviewScreen>
   void dispose() {
     super.dispose();
     _animationController.dispose();
-  }
-}
-
-class AppDrawer extends StatelessWidget {
-  const AppDrawer({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: AppColors.lightBackgroundColor,
-      child: ListView(
-        children: const [
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Options',
-              style: TextStyle(color: AppColors.textColor,fontSize: 20.0),
-            ),
-          ),
-          AboutListTile(
-            icon: Icon(
-              Icons.info_outline,
-              color: AppColors.textColor,
-            ),
-            child: Text(
-              "About",
-              style: TextStyle(color: AppColors.textColor),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

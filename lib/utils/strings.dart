@@ -1,3 +1,4 @@
+const String appName = "TimerBuddy";
 // Main Timer Strings
 const String timerSubtitleWorkout ="Workout";
 const String timerSubtitleRest = "Rest";

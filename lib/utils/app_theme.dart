@@ -8,6 +8,7 @@ class AppTheme {
       secondaryHeaderColor: AppColors.secondaryColor,
       scaffoldBackgroundColor: AppColors.darkBackground,
       textTheme: MyTextTheme.textTheme,
+      dialogTheme: myDialogTheme(),
       elevatedButtonTheme: MyElevatedButtonThemeData.buttonThemeData,
       colorScheme:
           ColorScheme.fromSwatch().copyWith(secondary: AppColors.accentColor,),
@@ -34,6 +35,13 @@ class AppTheme {
     )
 
   );
+
+  static DialogTheme myDialogTheme() {
+    return const DialogTheme(
+        backgroundColor: AppColors.white,
+        surfaceTintColor: Colors.transparent,
+    );
+  }
 
   static BottomSheetThemeData myBottomSheetThemeData() {
     return const BottomSheetThemeData(

@@ -43,6 +43,7 @@ dependencies:
   audioplayers: ^6.0.0
   wakelock_plus: ^1.2.4
   flutter_launcher_icons: ^0.13.1
+  package_info_plus: ^7.0.0
 
 flutter_launcher_icons:
   android: false
