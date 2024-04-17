@@ -8,7 +8,7 @@ class Countdown extends StatefulWidget {
   final AnimationController?
       animationController;
 
-  Countdown({
+  const Countdown({
     Key? key,
     required this.seconds,
     required this.build,

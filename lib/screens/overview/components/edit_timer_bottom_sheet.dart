@@ -88,7 +88,6 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
               for (var i = 0; i < widget.workoutTimer.runs; i++)
                 editWorkoutCountdownTextField(
                     widget.textEditingControllers, i, (newValue) => setState(() {
-                      print("chagned");
                 })),
               Padding(
                 padding: EdgeInsets.symmetric(

@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/db/isar_db.dart';
@@ -43,7 +42,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        _Title(),
+        const _Title(),
         // Workout time
         Padding(
           padding: EdgeInsets.symmetric(
@@ -59,7 +58,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                   controller: widget.workoutNameController,
                   placeholder: "Enter a name",
                   placeholderStyle:
-                      TextStyle(color: AppColors.lightBackgroundColor),
+                      const TextStyle(color: AppColors.lightBackgroundColor),
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(30),
                   ]),
@@ -75,7 +74,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                 controller: widget.workoutTimeController,
                 placeholder: "Enter your workout time",
                 placeholderStyle:
-                    TextStyle(color: AppColors.lightBackgroundColor),
+                    const TextStyle(color: AppColors.lightBackgroundColor),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
@@ -94,7 +93,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                 controller: widget.restTimeController,
                 placeholder: "Enter your rest time",
                 placeholderStyle:
-                    TextStyle(color: AppColors.lightBackgroundColor),
+                    const TextStyle(color: AppColors.lightBackgroundColor),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
@@ -113,7 +112,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                 controller: widget.runsController,
                 placeholder: "Enter your amount of runs",
                 placeholderStyle:
-                    TextStyle(color: AppColors.lightBackgroundColor),
+                    const TextStyle(color: AppColors.lightBackgroundColor),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
@@ -153,9 +152,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
 }
 
 class _Title extends StatelessWidget {
-  const _Title({
-    super.key,
-  });
+  const _Title();
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +160,7 @@ class _Title extends StatelessWidget {
       padding: EdgeInsets.symmetric(
         horizontal: SizeConfig.blockSizeHorizontal * 2,
       ),
-      child: Text(
+      child: const Text(
         "New Timer",
         style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24),
       ),

@@ -25,7 +25,7 @@ class _AppDrawerState extends State<AppDrawer> {
   final List<Widget> aboutBoxChildren = <Widget>[
     const SizedBox(height: 24),
     RichText(
-      text: TextSpan(
+      text: const TextSpan(
         children: <TextSpan>[
           TextSpan(
               style: TextStyle(color: AppColors.darkBackground),
@@ -69,14 +69,14 @@ class _AppDrawerState extends State<AppDrawer> {
               Icons.info_outline,
               color: AppColors.textColor,
             ),
-            child: const Text(
-              "About",
-              style: TextStyle(color: AppColors.textColor),
-            ),
             applicationVersion: _packageInfo.version,
             applicationName: Strings.appName,
             applicationLegalese: '\u{a9} 2024 Gera Blinkin',
             aboutBoxChildren: aboutBoxChildren,
+            child: const Text(
+              "About",
+              style: TextStyle(color: AppColors.textColor),
+            ),
           ),
         ],
       ),

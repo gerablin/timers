@@ -9,11 +9,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="move edit workouts to overview">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/main_timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/main_timer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/create_timer_inputs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/create_timer_inputs.dart" afterDir="false" />
+    <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="fixed android sound issues">
+      <change beforePath="$PROJECT_DIR$/lib/components/buttons/main_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/buttons/main_button.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/components/timer/countdown.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/timer/countdown.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/workout_timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/workout_timer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/app_colors.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/app_colors.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +51,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="2dAw3zqfYut78pekTzr9KUeRyZE" />
   <component name="ProjectView">
@@ -216,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713273429039</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="fixed android sound issues">
+      <option name="closed" value="true" />
+      <created>1713368261908</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1713368261908</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -251,6 +260,7 @@
     <MESSAGE value="change app icon; show current run amount in subtitle" />
     <MESSAGE value="make workouts editable" />
     <MESSAGE value="move edit workouts to overview" />
-    <option name="LAST_COMMIT_MESSAGE" value="move edit workouts to overview" />
+    <MESSAGE value="fixed android sound issues" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed android sound issues" />
   </component>
 </project>

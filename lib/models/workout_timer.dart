@@ -17,8 +17,8 @@ class WorkoutTimer {
     required this.workoutCountDown,
     required this.restCountDown,
     required this.runs,
-    List<int> workoutDurations = const [], // Optional parameter
-  }) : workoutDurations = workoutDurations ?? [];
+    this.workoutDurations = const [], // Optional parameter
+  });
 }
 
 extension CountdownListExtension on WorkoutTimer {

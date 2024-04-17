@@ -13,8 +13,6 @@ import 'package:timers/utils/size_config.dart';
 import 'package:timers/utils/strings.dart' as Strings;
 import 'package:wakelock_plus/wakelock_plus.dart';
 
-import 'overview/components/edit_timer_bottom_sheet.dart';
-
 class MainTimer extends StatefulWidget {
   MainTimer({
     super.key,
