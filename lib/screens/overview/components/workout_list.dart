@@ -28,7 +28,9 @@ class WorkoutList extends StatelessWidget {
     if (isEditMode) {
       showEditTimerBottomSheet(context, db, workoutTimer);
     } else {
-      _navigateToWorkout(context, workoutTimer.id);
+      Future.delayed(Duration(milliseconds: 300), () {
+        _navigateToWorkout(context, workoutTimer.id);
+      });
     }
   }
 
@@ -91,11 +93,14 @@ class WorkoutCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
-      child: GestureDetector(
-        onTap: onClick,
-        child: Stack(
-          children: [
-            Card(
+      child: Stack(
+        children: [
+          Card(
+            child: InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              onTap: onClick,
               child: Padding(
                 padding: EdgeInsets.only(
                     top: SizeConfig.blockSizeVertical,
@@ -135,8 +140,11 @@ class WorkoutCard extends StatelessWidget {
                 ),
               ),
             ),
-            if (isEditMode)
-              Positioned.fill(
+          ),
+          if (isEditMode)
+            Positioned.fill(
+              child: GestureDetector(
+                onTap: onClick,
                 child: Card(
                   color: Colors.black.withOpacity(0.5),
                   child: const Center(
@@ -151,8 +159,8 @@ class WorkoutCard extends StatelessWidget {
                   ),
                 ),
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }

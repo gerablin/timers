@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timers/utils/app_colors.dart';
 
 import '../../utils/size_config.dart';
 

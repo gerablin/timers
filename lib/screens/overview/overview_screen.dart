@@ -19,7 +19,7 @@ class OverviewScreen extends StatefulWidget {
 class _OverviewScreenState extends State<OverviewScreen> {
   final IsarDb db = IsarDb();
 
-   bool isEditMode = false;
+  bool isEditMode = false;
 
   void _openCreateTimerSheet(
     BuildContext context,
@@ -40,7 +40,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
         title: const Text("Workouts"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit), // Use the edit icon
+            icon: isEditMode ? Icon(Icons.check_circle) : Icon(Icons.edit),
+            // Use the edit icon
             onPressed: () {
               _toggleEditMode();
             },

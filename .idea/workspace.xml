@@ -12,10 +12,10 @@
     <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="move edit workouts to overview">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/components/buttons/main_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/buttons/main_button.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/main_timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/main_timer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/create_timer_inputs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/create_timer_inputs.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/edit_timer_bottom_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/edit_timer_bottom_sheet.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/overview/overview_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/overview_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/app_colors.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/app_colors.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/app_theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/app_theme.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,6 +226,17 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
     </layout>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update progress bar with timer" />

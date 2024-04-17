@@ -82,6 +82,14 @@ class MyElevatedButtonThemeData {
           return AppColors.primaryColor; // Use the component's default.
         },
       ),
+      foregroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return AppColors.disabledTextColor; // Change to your desired disabled text color
+          }
+          return AppColors.white; // Use the component's default.
+        },
+      ),
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
