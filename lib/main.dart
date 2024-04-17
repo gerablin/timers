@@ -13,7 +13,7 @@ void main() {
 
 Future<void> initDatabaseIsar() async {
   WorkoutTimer workoutTimer =
-  WorkoutTimer(workoutCountDown: 2, restCountDown: 1, runs: 3);
+  WorkoutTimer(name: "default workout", workoutCountDown: 2, restCountDown: 1, runs: 3);
   // comment in to reset DB
   // await IsarDb().cleanDb();
   // await IsarDb().saveWorkout(workoutTimer);

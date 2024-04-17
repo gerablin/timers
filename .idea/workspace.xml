@@ -9,11 +9,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="make workouts editable">
+    <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="move edit workouts to overview">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/main_timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/main_timer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/overview/overview_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/overview_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/workout_timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/workout_timer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/workout_timer.g.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/create_timer_inputs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/create_timer_inputs.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/overview/create_timer_bottom_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/create_timer_bottom_sheet.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +210,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713258554008</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="move edit workouts to overview">
+      <option name="closed" value="true" />
+      <created>1713273429039</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1713273429039</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -231,6 +241,7 @@
     <MESSAGE value="added subtitles; String consts" />
     <MESSAGE value="change app icon; show current run amount in subtitle" />
     <MESSAGE value="make workouts editable" />
-    <option name="LAST_COMMIT_MESSAGE" value="make workouts editable" />
+    <MESSAGE value="move edit workouts to overview" />
+    <option name="LAST_COMMIT_MESSAGE" value="move edit workouts to overview" />
   </component>
 </project>

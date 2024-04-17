@@ -4,6 +4,7 @@ import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/utils/size_config.dart';
 
 void showCreateTimerBottomSheet(BuildContext context, IsarDb db) {
+  final TextEditingController workoutNameController = TextEditingController();
   final TextEditingController workoutTimeController = TextEditingController();
   final TextEditingController restTimeController = TextEditingController();
   final TextEditingController runsController = TextEditingController();
@@ -23,6 +24,7 @@ void showCreateTimerBottomSheet(BuildContext context, IsarDb db) {
           child: SizedBox(
             width: double.infinity,
             child: CreateTimerInputs(
+              workoutNameController: workoutNameController,
                 workoutTimeController: workoutTimeController,
                 restTimeController: restTimeController,
                 runsController: runsController,

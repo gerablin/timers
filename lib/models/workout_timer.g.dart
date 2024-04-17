@@ -17,23 +17,28 @@ const WorkoutTimerSchema = CollectionSchema(
   name: r'WorkoutTimer',
   id: 1604844873729151931,
   properties: {
-    r'restCountDown': PropertySchema(
+    r'name': PropertySchema(
       id: 0,
+      name: r'name',
+      type: IsarType.string,
+    ),
+    r'restCountDown': PropertySchema(
+      id: 1,
       name: r'restCountDown',
       type: IsarType.long,
     ),
     r'runs': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'runs',
       type: IsarType.long,
     ),
     r'workoutCountDown': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'workoutCountDown',
       type: IsarType.long,
     ),
     r'workoutDurations': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'workoutDurations',
       type: IsarType.longList,
     )
@@ -58,6 +63,7 @@ int _workoutTimerEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.name.length * 3;
   bytesCount += 3 + object.workoutDurations.length * 8;
   return bytesCount;
 }
@@ -68,10 +74,11 @@ void _workoutTimerSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.restCountDown);
-  writer.writeLong(offsets[1], object.runs);
-  writer.writeLong(offsets[2], object.workoutCountDown);
-  writer.writeLongList(offsets[3], object.workoutDurations);
+  writer.writeString(offsets[0], object.name);
+  writer.writeLong(offsets[1], object.restCountDown);
+  writer.writeLong(offsets[2], object.runs);
+  writer.writeLong(offsets[3], object.workoutCountDown);
+  writer.writeLongList(offsets[4], object.workoutDurations);
 }
 
 WorkoutTimer _workoutTimerDeserialize(
@@ -81,10 +88,11 @@ WorkoutTimer _workoutTimerDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = WorkoutTimer(
-    restCountDown: reader.readLong(offsets[0]),
-    runs: reader.readLong(offsets[1]),
-    workoutCountDown: reader.readLong(offsets[2]),
-    workoutDurations: reader.readLongList(offsets[3]) ?? const [],
+    name: reader.readString(offsets[0]),
+    restCountDown: reader.readLong(offsets[1]),
+    runs: reader.readLong(offsets[2]),
+    workoutCountDown: reader.readLong(offsets[3]),
+    workoutDurations: reader.readLongList(offsets[4]) ?? const [],
   );
   object.id = id;
   return object;
@@ -98,12 +106,14 @@ P _workoutTimerDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 1:
       return (reader.readLong(offset)) as P;
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
+      return (reader.readLong(offset)) as P;
+    case 4:
       return (reader.readLongList(offset) ?? const []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -253,6 +263,140 @@ extension WorkoutTimerQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition> nameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      nameGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition> nameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition> nameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'name',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      nameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition> nameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition> nameContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition> nameMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'name',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      nameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      nameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'name',
+        value: '',
       ));
     });
   }
@@ -577,6 +721,18 @@ extension WorkoutTimerQueryLinks
 
 extension WorkoutTimerQuerySortBy
     on QueryBuilder<WorkoutTimer, WorkoutTimer, QSortBy> {
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy> sortByName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy> sortByNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.desc);
+    });
+  }
+
   QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy> sortByRestCountDown() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'restCountDown', Sort.asc);
@@ -631,6 +787,18 @@ extension WorkoutTimerQuerySortThenBy
     });
   }
 
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy> thenByName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy> thenByNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.desc);
+    });
+  }
+
   QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy> thenByRestCountDown() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'restCountDown', Sort.asc);
@@ -673,6 +841,13 @@ extension WorkoutTimerQuerySortThenBy
 
 extension WorkoutTimerQueryWhereDistinct
     on QueryBuilder<WorkoutTimer, WorkoutTimer, QDistinct> {
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QDistinct> distinctByName(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<WorkoutTimer, WorkoutTimer, QDistinct>
       distinctByRestCountDown() {
     return QueryBuilder.apply(this, (query) {
@@ -706,6 +881,12 @@ extension WorkoutTimerQueryProperty
   QueryBuilder<WorkoutTimer, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, String, QQueryOperations> nameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'name');
     });
   }
 

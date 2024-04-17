@@ -6,12 +6,14 @@ part 'workout_timer.g.dart';
 class WorkoutTimer {
   Id id = Isar.autoIncrement; // you can also use id = null to auto increment
 
+  String name;
   int restCountDown;
   int workoutCountDown;
   int runs;
   List<int> workoutDurations;
 
   WorkoutTimer({
+    required this.name,
     required this.workoutCountDown,
     required this.restCountDown,
     required this.runs,
