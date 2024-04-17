@@ -7,17 +7,9 @@ import 'package:timers/utils/app_theme.dart';
 import 'package:timers/utils/size_config.dart';
 
 void main() {
-  runApp( MyApp());
-  initDatabaseIsar();
+  runApp( const MyApp());
 }
 
-Future<void> initDatabaseIsar() async {
-  WorkoutTimer workoutTimer =
-  WorkoutTimer(name: "default workout", workoutCountDown: 2, restCountDown: 1, runs: 3);
-  // comment in to reset DB
-  // await IsarDb().cleanDb();
-  // await IsarDb().saveWorkout(workoutTimer);
-}
 
 late SizeConfig sizeConfig;
 

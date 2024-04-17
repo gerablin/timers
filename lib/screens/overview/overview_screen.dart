@@ -1,13 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:timers/components/icons/cooldown_icon.dart';
-import 'package:timers/components/icons/fire_icon.dart';
 import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/screens/overview/components/workout_list.dart';
 import 'package:timers/screens/overview/create_timer_bottom_sheet.dart';
+import 'package:timers/utils/app_colors.dart';
 import 'package:timers/utils/size_config.dart';
-
-import '../../models/workout_timer.dart';
 
 class OverviewScreen extends StatefulWidget {
   OverviewScreen({super.key});
@@ -16,15 +13,34 @@ class OverviewScreen extends StatefulWidget {
   State<OverviewScreen> createState() => _OverviewScreenState();
 }
 
-class _OverviewScreenState extends State<OverviewScreen> {
+class _OverviewScreenState extends State<OverviewScreen>
+    with SingleTickerProviderStateMixin {
   final IsarDb db = IsarDb();
-
+  late AnimationController _animationController;
+  bool isPlaying = false;
+  bool isDrawerOpen = false;
   bool isEditMode = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _openCreateTimerSheet(
     BuildContext context,
   ) {
     showCreateTimerBottomSheet(context, db);
+  }
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
+    super.initState();
+  }
+
+  void _onDrawerChanged() {
+    isPlaying = !isPlaying;
+    setState(() {
+      isDrawerOpen = !isDrawerOpen;
+    });
+    isPlaying ? _animationController.forward() : _animationController.reverse();
   }
 
   void _toggleEditMode() {
@@ -38,9 +54,24 @@ class _OverviewScreenState extends State<OverviewScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Workouts"),
+        leading: IconButton(
+          icon: AnimatedIcon(
+            icon: AnimatedIcons.menu_close,
+            progress: _animationController,
+          ),
+          onPressed: () {
+            if (!isDrawerOpen) {
+              _scaffoldKey.currentState?.openDrawer();
+            } else {
+              Navigator.pop(context);
+            }
+          },
+        ),
         actions: [
           IconButton(
-            icon: isEditMode ? Icon(Icons.check_circle) : Icon(Icons.edit),
+            icon: isEditMode
+                ? const Icon(Icons.check_circle)
+                : const Icon(Icons.edit),
             // Use the edit icon
             onPressed: () {
               _toggleEditMode();
@@ -48,22 +79,69 @@ class _OverviewScreenState extends State<OverviewScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 2),
-          child: Column(
-            children: [
-              WorkoutList(
-                db: db,
-                isEditMode: isEditMode,
-              )
-            ],
+      body: Scaffold(
+        key: _scaffoldKey,
+        onDrawerChanged: (onDrawerChanged) {
+          _onDrawerChanged();
+        },
+        drawer: const AppDrawer(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 2),
+            child: Column(
+              children: [
+                WorkoutList(
+                  db: db,
+                  isEditMode: isEditMode,
+                )
+              ],
+            ),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _openCreateTimerSheet(context),
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController.dispose();
+  }
+}
+
+class AppDrawer extends StatelessWidget {
+  const AppDrawer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: AppColors.lightBackgroundColor,
+      child: ListView(
+        children: const [
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              'Options',
+              style: TextStyle(color: AppColors.textColor,fontSize: 20.0),
+            ),
+          ),
+          AboutListTile(
+            icon: Icon(
+              Icons.info_outline,
+              color: AppColors.textColor,
+            ),
+            child: Text(
+              "About",
+              style: TextStyle(color: AppColors.textColor),
+            ),
+          ),
+        ],
       ),
     );
   }
