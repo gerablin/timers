@@ -56,6 +56,8 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
 
   void _initFirstTimer() async {
     player.setSource(AssetSource('sounds/ding.m4a'));
+    player.setReleaseMode(ReleaseMode.stop);
+
     workoutTimer = await widget.db.getWorkoutTimerById(widget.workoutId);
 
     timers = workoutTimer!.generateCountdowns();
@@ -72,7 +74,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   }
 
   void _setupNextTimer() {
-    player.resume();
+    playSound();
     setState(() {
       if (timers.isNotEmpty) {
         currentTimer = timers[0].first;
@@ -88,6 +90,10 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
       _startPauseTimer();
       _startPauseTimer();
     });
+  }
+
+  void playSound() {
+    player.resume();
   }
 
   void _workoutFinished() {

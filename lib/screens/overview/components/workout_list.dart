@@ -6,7 +6,6 @@ import 'package:timers/components/icons/cooldown_icon.dart';
 import 'package:timers/components/icons/fire_icon.dart';
 import 'package:timers/models/workout_timer.dart';
 import 'package:timers/screens/overview/components/edit_timer_bottom_sheet.dart';
-import 'package:timers/screens/overview/overview_screen.dart';
 import 'package:timers/utils/app_colors.dart';
 import 'package:timers/utils/size_config.dart';
 
@@ -28,7 +27,7 @@ class WorkoutList extends StatelessWidget {
     if (isEditMode) {
       showEditTimerBottomSheet(context, db, workoutTimer);
     } else {
-      Future.delayed(Duration(milliseconds: 300), () {
+      Future.delayed(const Duration(milliseconds: 300), () {
         _navigateToWorkout(context, workoutTimer.id);
       });
     }
@@ -38,7 +37,7 @@ class WorkoutList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 4),
+      EdgeInsets.symmetric(horizontal: SizeConfig.blockSizeHorizontal * 4),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -111,18 +110,20 @@ class WorkoutCard extends StatelessWidget {
                   children: [
                     Text(
                       workout.name,
-                      style: TextStyle(fontSize: 20.0, letterSpacing: 1.2),
+                      style: const TextStyle(fontSize: 20.0, letterSpacing: 1.2),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Row(
+                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.directions_run_outlined,
                               color: AppColors.accentColor,
                             ),
-                            Text("Runs"),
+                            Padding(padding: EdgeInsets.symmetric(
+                                horizontal: SizeConfig.blockSizeHorizontal )),
+                            const Text("Runs"),
                           ],
                         ),
                         Text("${workout.runs}")
@@ -179,10 +180,12 @@ class RestTimeRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Row(
+         Row(
           children: [
-            CooldownIcon(),
-            Text("Time"),
+            const CooldownIcon(),
+            Padding(padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.blockSizeHorizontal )),
+            const Text("Time"),
           ],
         ),
         Text("${workout.restCountDown} s")
@@ -204,10 +207,12 @@ class WorkoutTimeRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Row(
+         Row(
           children: [
-            FireIcon(),
-            Text("Time"),
+            const FireIcon(),
+            Padding(padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.blockSizeHorizontal )),
+            const Text("Time"),
           ],
         ),
         WorkoutTimeText(workout: workout)

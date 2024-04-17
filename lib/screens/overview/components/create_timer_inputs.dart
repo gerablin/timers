@@ -60,7 +60,6 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                   placeholder: "Enter a name",
                   placeholderStyle:
                       TextStyle(color: AppColors.lightBackgroundColor),
-                  keyboardType: TextInputType.number,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(30),
                   ]),
