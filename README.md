@@ -1,16 +1,26 @@
-# timers
+##  ⏳ timerbuddy ⏳
 
-A new Flutter project.
+timerbuddy is a lightweight and intuitive timer app designed to streamline your routines and tasks. This app is your go-to companion for your workouts.
 
-## Getting Started
+### Features
 
-This project is a starting point for a Flutter application.
+- Manage multiple timers
+- Customize timer durations
+- Simple and intuitive user interface
+- Workout without interruptions
 
-A few resources to get you started if this is your first Flutter project:
+### Usage
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Download and install timerbuddy from the [Play Store](link) / App Store or compile it yourself.
+2. Launch the app and set your desired timer durations.
+3. Edit your timer if you want different durations in a workout
+4. Start the timers and stay focused on your workout with ease.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Screenshots
+<img src="https://github.com/gerablin/timers/assets/121195720/d9aa4969-5a1a-4f1e-8500-511427f673af" width="276" height="480" />
+
+<img src="https://github.com/gerablin/timers/assets/121195720/74e97875-4ab2-46f7-88bc-11e26189b5a3" width="276" height="480" />
+
+### Feedback
+
+I value your feedback! If you have any feature wishes, suggestions, or issues, please feel free to reach out schieberdevacc+timerbuddy@gmail.com. :)
