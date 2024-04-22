@@ -125,7 +125,7 @@ Widget editWorkoutCountdownTextField(
             vertical: SizeConfig.blockSizeVertical * 2,
             horizontal: SizeConfig.blockSizeHorizontal * 2),
         controller: textEditingControllers[i],
-        placeholder: "Workout $i countdown",
+        placeholder: "Workout ${i+1} countdown",
         placeholderStyle:
             const TextStyle(color: AppColors.lightBackgroundColor),
         keyboardType: TextInputType.number,
