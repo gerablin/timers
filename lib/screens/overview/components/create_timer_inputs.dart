@@ -56,7 +56,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                       vertical: SizeConfig.blockSizeVertical * 2,
                       horizontal: SizeConfig.blockSizeHorizontal * 2),
                   controller: widget.workoutNameController,
-                  placeholder: "Enter a name",
+                  placeholder: "Name",
                   placeholderStyle:
                       const TextStyle(color: AppColors.lightBackgroundColor),
                   inputFormatters: [
@@ -72,7 +72,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                     vertical: SizeConfig.blockSizeVertical * 2,
                     horizontal: SizeConfig.blockSizeHorizontal * 2),
                 controller: widget.workoutTimeController,
-                placeholder: "Enter your workout time",
+                placeholder: "Workout time in seconds",
                 placeholderStyle:
                     const TextStyle(color: AppColors.lightBackgroundColor),
                 keyboardType: TextInputType.number,
@@ -91,7 +91,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                     vertical: SizeConfig.blockSizeVertical * 2,
                     horizontal: SizeConfig.blockSizeHorizontal * 2),
                 controller: widget.restTimeController,
-                placeholder: "Enter your rest time",
+                placeholder: "Rest time in seconds",
                 placeholderStyle:
                     const TextStyle(color: AppColors.lightBackgroundColor),
                 keyboardType: TextInputType.number,
@@ -110,7 +110,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                     vertical: SizeConfig.blockSizeVertical * 2,
                     horizontal: SizeConfig.blockSizeHorizontal * 2),
                 controller: widget.runsController,
-                placeholder: "Enter your amount of runs",
+                placeholder: "Amount of runs",
                 placeholderStyle:
                     const TextStyle(color: AppColors.lightBackgroundColor),
                 keyboardType: TextInputType.number,
