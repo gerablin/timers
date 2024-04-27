@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/db/isar_db.dart';
+import 'package:timers/components/text/bottom_sheet_title.dart';
 import 'package:timers/models/workout_timer.dart';
 import 'package:timers/utils/app_colors.dart';
 import 'package:timers/utils/size_config.dart';
@@ -83,12 +84,13 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
         child: SizedBox(
           width: double.infinity,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              const BottomSheetTitle(title: "Edit workout time"),
               for (var i = 0; i < widget.workoutTimer.runs; i++)
-                editWorkoutCountdownTextField(
-                    widget.textEditingControllers, i, (newValue) => setState(() {
-                })),
+                editWorkoutCountdownTextField(widget.textEditingControllers, i,
+                    (newValue) => setState(() {})),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: SizeConfig.blockSizeHorizontal * 2,
@@ -109,6 +111,8 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
   }
 }
 
+
+
 Widget editWorkoutCountdownTextField(
     Map<int, TextEditingController> textEditingControllers,
     int i,
@@ -117,17 +121,17 @@ Widget editWorkoutCountdownTextField(
     mainAxisSize: MainAxisSize.min,
     children: [
       Padding(
-          padding:
-              EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical)),
+        padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
+      ),
       CupertinoTextField(
         onChanged: onChanged,
         padding: EdgeInsets.symmetric(
             vertical: SizeConfig.blockSizeVertical * 2,
             horizontal: SizeConfig.blockSizeHorizontal * 2),
         controller: textEditingControllers[i],
-        placeholder: "Workout ${i+1} countdown",
+        placeholder: "Workout ${i + 1} countdown",
         placeholderStyle:
-            const TextStyle(color: AppColors.lightBackgroundColor),
+            const TextStyle(color: AppColors.inputPlaceholderColor),
         keyboardType: TextInputType.number,
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.digitsOnly

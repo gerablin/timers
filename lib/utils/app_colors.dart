@@ -8,6 +8,7 @@ class AppColors {
   static const Color alternativeAccentColor = Color(0xffF9F5EB);
   static const Color darkBackground = Color(0xff0E1117);
   static const Color lightBackgroundColor = Color(0xff2F3136);
+  static const Color inputPlaceholderColor = Color(0xff7B7B7B);
   static const Color disabledColor =  Colors.grey;
   static const Color textColor = Color(0xffBBBBBF);
   static const Color disabledTextColor = darkBackground;
