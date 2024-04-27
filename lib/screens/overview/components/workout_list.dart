@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:timers/components/db/isar_db.dart';
@@ -7,6 +8,8 @@ import 'package:timers/models/workout_timer.dart';
 import 'package:timers/screens/overview/components/edit_timer_bottom_sheet.dart';
 import 'package:timers/utils/app_colors.dart';
 import 'package:timers/utils/size_config.dart';
+
+import '../../main_timer.dart';
 
 class WorkoutList extends StatelessWidget {
   const WorkoutList({
@@ -94,51 +97,61 @@ class WorkoutCard extends StatelessWidget {
       child: Stack(
         children: [
           Card(
-            child: InkWell(
-              customBorder: RoundedRectangleBorder(
+            child: OpenContainer(
+              closedShape:RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
-              ),
-              onTap: onClick,
-              child: Padding(
-                padding: EdgeInsets.only(
-                    top: SizeConfig.blockSizeVertical,
-                    bottom: SizeConfig.blockSizeVertical * 2,
-                    left: SizeConfig.blockSizeHorizontal * 4,
-                    right: SizeConfig.blockSizeHorizontal * 4),
-                child: Column(
-                  children: [
-                    Text(
-                      workout.name,
-                      style: const TextStyle(fontSize: 20.0, letterSpacing: 1.2),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         Row(
-                          children: [
-                            const Icon(
-                              Icons.directions_run_outlined,
-                              color: AppColors.accentColor,
-                            ),
-                            Padding(padding: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.blockSizeHorizontal )),
-                            const Text("Runs"),
-                          ],
-                        ),
-                        Text("${workout.runs}")
-                      ],
-                    ),
-                    Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: SizeConfig.blockSizeVertical * 0.5)),
-                    WorkoutTimeRow(workout: workout),
-                    Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: SizeConfig.blockSizeVertical * 0.5)),
-                    RestTimeRow(workout: workout)
-                  ],
-                ),
-              ),
+              ) ,
+              openColor: Colors.transparent,
+              closedColor: Colors.transparent,
+              openBuilder: (BuildContext context, void Function() action) {
+                Future.delayed(const Duration(milliseconds: 300), () {});
+                return MainTimer(
+                  workoutId: workout.id,
+                );
+              },
+              closedBuilder:  (BuildContext context, void Function() action) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                      top: SizeConfig.blockSizeVertical,
+                      bottom: SizeConfig.blockSizeVertical * 2,
+                      left: SizeConfig.blockSizeHorizontal * 4,
+                      right: SizeConfig.blockSizeHorizontal * 4),
+                  child: Column(
+                    children: [
+                      Text(
+                        workout.name,
+                        style: const TextStyle(fontSize: 20.0, letterSpacing: 1.2),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.directions_run_outlined,
+                                color: AppColors.accentColor,
+                              ),
+                              Padding(padding: EdgeInsets.symmetric(
+                                  horizontal: SizeConfig.blockSizeHorizontal )),
+                              const Text("Runs"),
+                            ],
+                          ),
+                          Text("${workout.runs}")
+                        ],
+                      ),
+                      Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: SizeConfig.blockSizeVertical * 0.5)),
+                      WorkoutTimeRow(workout: workout),
+                      Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: SizeConfig.blockSizeVertical * 0.5)),
+                      RestTimeRow(workout: workout)
+                    ],
+                  ),
+                );
+              },
+
             ),
           ),
           if (isEditMode)
