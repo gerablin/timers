@@ -8,6 +8,8 @@ void showCreateTimerBottomSheet(BuildContext context, IsarDb db) {
   final TextEditingController workoutTimeController = TextEditingController();
   final TextEditingController restTimeController = TextEditingController();
   final TextEditingController runsController = TextEditingController();
+  final TextEditingController sessionController = TextEditingController();
+  final TextEditingController sessionCooldownController = TextEditingController();
 
   showModalBottomSheet(
       useRootNavigator: true,
@@ -15,20 +17,24 @@ void showCreateTimerBottomSheet(BuildContext context, IsarDb db) {
       showDragHandle: true,
       context: context,
       builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-              left: SizeConfig.blockSizeHorizontal * 2,
-              right: SizeConfig.blockSizeHorizontal * 2,
-              bottom: (MediaQuery.of(context).viewInsets.bottom) +
-                  SizeConfig.blockSizeVertical * 3),
-          child: SizedBox(
-            width: double.infinity,
-            child: CreateTimerInputs(
-              workoutNameController: workoutNameController,
-                workoutTimeController: workoutTimeController,
-                restTimeController: restTimeController,
-                runsController: runsController,
-                db: db),
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: SizeConfig.blockSizeHorizontal * 2,
+                right: SizeConfig.blockSizeHorizontal * 2,
+                bottom: (MediaQuery.of(context).viewInsets.bottom) +
+                    SizeConfig.blockSizeVertical * 3),
+            child: SizedBox(
+              width: double.infinity,
+              child: CreateTimerInputs(
+                workoutNameController: workoutNameController,
+                  workoutTimeController: workoutTimeController,
+                  restTimeController: restTimeController,
+                  runsController: runsController,
+                  sessionController: sessionController,
+                  sessionCooldownController: sessionCooldownController,
+                  db: db),
+            ),
           ),
         );
       });

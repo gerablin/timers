@@ -11,14 +11,17 @@ class WorkoutTimer {
   int workoutCountDown;
   int runs;
   List<int> workoutDurations;
+  int? sessions;
+  int? sessionCooldownTime;
 
-  WorkoutTimer({
-    required this.name,
-    required this.workoutCountDown,
-    required this.restCountDown,
-    required this.runs,
-    this.workoutDurations = const [], // Optional parameter
-  });
+  WorkoutTimer(
+      {required this.name,
+      required this.workoutCountDown,
+      required this.restCountDown,
+      required this.runs,
+      this.workoutDurations = const [],
+      this.sessions,
+      this.sessionCooldownTime});
 }
 
 extension CountdownListExtension on WorkoutTimer {
@@ -26,18 +29,29 @@ extension CountdownListExtension on WorkoutTimer {
   List<Pair<int, bool>> generateCountdowns() {
     List<Pair<int, bool>> countdowns = [];
 
-    if(workoutDurations.isEmpty){
-    // if workout durations are all the same and not individualised
+    addWorkoutRuns(countdowns);
+
+    if (sessions != null && sessions != 1 && sessionCooldownTime != null) {
+      // go from 1 as we add the first session by default
+      for (int i = 1; i < sessions!; i++) {
+        countdowns.add(Pair<int, bool>(sessionCooldownTime!, true));
+        addWorkoutRuns(countdowns);
+      }
+    }
+    return countdowns;
+  }
+
+  void addWorkoutRuns(List<Pair<int, bool>> countdowns) {
+    if (workoutDurations.isEmpty) {
+      // if workout durations are all the same and not individualised
       addByWorkoutCountdown(countdowns);
     } else {
       // if individual durations are given
       addByIndividualDuration(countdowns);
     }
-    return countdowns;
   }
 
   void addByIndividualDuration(List<Pair<int, bool>> countdowns) {
-
     // Add the initial workout countdown
     countdowns.add(Pair<int, bool>(workoutDurations[0], false));
 
@@ -49,7 +63,7 @@ extension CountdownListExtension on WorkoutTimer {
   }
 
   void addByWorkoutCountdown(List<Pair<int, bool>> countdowns) {
-      // Add the initial workout countdown
+    // Add the initial workout countdown
     countdowns.add(Pair<int, bool>(workoutCountDown, false));
 
     // Add rest countdowns based on runs

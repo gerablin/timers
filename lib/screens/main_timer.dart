@@ -128,7 +128,8 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   }
 
   void _updateTimerSubtitle() {
-    String workoutAmount = "(${currentRun.toString()}/$runs)";
+    String aggregateRuns = (int.parse(runs) * (workoutTimer!.sessions!)).toString();
+    String workoutAmount = "(${currentRun.toString()}/$aggregateRuns)";
     bool isRestTimer = timers.first.second;
     timerSubtitle = isRestTimer
         ? Strings.timerSubtitleRest

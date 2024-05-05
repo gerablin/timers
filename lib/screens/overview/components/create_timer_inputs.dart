@@ -3,9 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/components/text/bottom_sheet_title.dart';
+import 'package:timers/components/text_fields/session_inputs.dart';
 import 'package:timers/models/workout_timer.dart';
 import 'package:timers/utils/app_colors.dart';
 import 'package:timers/utils/size_config.dart';
+import 'package:timers/utils/strings.dart' as Strings;
+
 
 class CreateTimerInputs extends StatefulWidget {
   const CreateTimerInputs({
@@ -14,6 +17,8 @@ class CreateTimerInputs extends StatefulWidget {
     required this.workoutTimeController,
     required this.restTimeController,
     required this.runsController,
+    required this.sessionController,
+    required this.sessionCooldownController,
     required this.db,
   });
 
@@ -21,6 +26,8 @@ class CreateTimerInputs extends StatefulWidget {
   final TextEditingController workoutTimeController;
   final TextEditingController restTimeController;
   final TextEditingController runsController;
+  final TextEditingController sessionController;
+  final TextEditingController sessionCooldownController;
   final IsarDb db;
 
   @override
@@ -50,6 +57,8 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
               horizontal: SizeConfig.blockSizeHorizontal * 2,
               vertical: SizeConfig.blockSizeVertical * 2),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               CupertinoTextField(
                   onChanged: (newValue) => setState(() {}),
@@ -119,6 +128,19 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                   FilteringTextInputFormatter.digitsOnly
                 ], // Only numbers can be entered
               ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.blockSizeHorizontal * 2,
+                  right: SizeConfig.blockSizeHorizontal * 2,
+                  top: SizeConfig.blockSizeVertical * 2
+                ),
+                child: const BottomSheetSubtitle(text: Strings.sessionSubtitle),
+              ),
+              SessionInputs(
+                  sessionTextEditingController: widget.sessionController,
+                  sessionCooldownTextEditingController:
+                      widget.sessionCooldownController,
+                  onChanged: (newValue) => setState(() {}))
             ],
           ),
         ),
@@ -130,12 +152,20 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
               isEnabled: areAllFieldsFilled(),
               callback: () {
                 if (areAllFieldsFilled()) {
-                  widget.db.saveWorkout(WorkoutTimer(
-                      name: widget.workoutNameController.text,
-                      workoutCountDown:
-                          int.parse(widget.workoutTimeController.text),
-                      restCountDown: int.parse(widget.restTimeController.text),
-                      runs: int.parse(widget.runsController.text)));
+                  widget.db.saveWorkout(
+                    WorkoutTimer(
+                        name: widget.workoutNameController.text,
+                        workoutCountDown:
+                            int.parse(widget.workoutTimeController.text),
+                        restCountDown:
+                            int.parse(widget.restTimeController.text),
+                        runs: int.parse(
+                          widget.runsController.text,
+                        ),
+                        sessions: int.tryParse(widget.sessionController.text),
+                        sessionCooldownTime: int.tryParse(
+                            widget.sessionCooldownController.text)),
+                  );
                   Navigator.pop(context);
                 }
               }),
@@ -148,6 +178,8 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
     return widget.workoutNameController.text.isNotEmpty &&
         widget.workoutTimeController.text.isNotEmpty &&
         widget.restTimeController.text.isNotEmpty &&
-        widget.runsController.text.isNotEmpty;
+        widget.runsController.text.isNotEmpty &&
+        widget.sessionController.text.isNotEmpty &&
+        widget.sessionCooldownController.text.isNotEmpty;
   }
 }

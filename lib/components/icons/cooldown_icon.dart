@@ -7,7 +7,7 @@ class CooldownIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Icon(
       Icons.ac_unit_outlined,
-      color: Colors.indigoAccent,
+      color: Colors.lightBlueAccent,
     );
   }
 }

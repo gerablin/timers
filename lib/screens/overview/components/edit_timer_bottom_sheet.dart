@@ -4,22 +4,26 @@ import 'package:flutter/services.dart';
 import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/components/text/bottom_sheet_title.dart';
+import 'package:timers/components/text_fields/session_inputs.dart';
 import 'package:timers/models/workout_timer.dart';
 import 'package:timers/utils/app_colors.dart';
+import 'package:timers/utils/constants.dart';
 import 'package:timers/utils/size_config.dart';
+import 'package:timers/utils/strings.dart' as Strings;
 
-final TextEditingController workoutTimeController = TextEditingController();
-final TextEditingController restTimeController = TextEditingController();
-final TextEditingController runsController = TextEditingController();
-
-void showEditTimerBottomSheet(
-    BuildContext context, IsarDb db, WorkoutTimer workoutTimer) {
+void showEditTimerBottomSheet(BuildContext context, IsarDb db,
+    WorkoutTimer workoutTimer) {
   Map<int, TextEditingController> textEditingControllers = {};
 
   void setupTextEditingControllers() {
     for (var i = 0; i < workoutTimer.runs; i++) {
       textEditingControllers.putIfAbsent(i, () => TextEditingController());
     }
+    textEditingControllers.putIfAbsent(
+        SESSION_TEXT_EDITING_CONTROLLER_KEY, () => TextEditingController());
+    textEditingControllers.putIfAbsent(
+        SESSION_COOLDOWN_TEXT_EDITING_CONTROLLER_KEY,
+            () => TextEditingController());
   }
 
   showModalBottomSheet(
@@ -37,11 +41,10 @@ void showEditTimerBottomSheet(
 }
 
 class EditWorkoutInputs extends StatefulWidget {
-  const EditWorkoutInputs(
-      {super.key,
-      required this.textEditingControllers,
-      required this.workoutTimer,
-      required this.db});
+  const EditWorkoutInputs({super.key,
+    required this.textEditingControllers,
+    required this.workoutTimer,
+    required this.db});
 
   final WorkoutTimer workoutTimer;
   final IsarDb db;
@@ -60,6 +63,14 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
       }
     }
     widget.workoutTimer.workoutDurations = durations;
+    widget.workoutTimer.sessions = int.tryParse(widget
+        .textEditingControllers[SESSION_TEXT_EDITING_CONTROLLER_KEY]
+        ?.text ??
+        "");
+    widget.workoutTimer.sessionCooldownTime = int.tryParse(widget
+        .textEditingControllers[SESSION_COOLDOWN_TEXT_EDITING_CONTROLLER_KEY]
+        ?.text ??
+        "");
     return widget.workoutTimer;
   }
 
@@ -78,7 +89,10 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
       padding: EdgeInsets.only(
           left: SizeConfig.blockSizeHorizontal * 2,
           right: SizeConfig.blockSizeHorizontal * 2,
-          bottom: (MediaQuery.of(context).viewInsets.bottom) +
+          bottom: (MediaQuery
+              .of(context)
+              .viewInsets
+              .bottom) +
               SizeConfig.blockSizeVertical * 3),
       child: SingleChildScrollView(
         child: SizedBox(
@@ -88,16 +102,32 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const BottomSheetTitle(title: "Edit workout time"),
+              // Widgets for workout time
               for (var i = 0; i < widget.workoutTimer.runs; i++)
                 editWorkoutCountdownTextField(widget.textEditingControllers, i,
-                    (newValue) => setState(() {})),
+                        (newValue) => setState(() {})),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: SizeConfig.blockSizeHorizontal * 2,
+                    right: SizeConfig.blockSizeHorizontal * 2,
+                    top: SizeConfig.blockSizeVertical * 2
+                ),
+                child: const BottomSheetSubtitle(text: Strings.sessionSubtitle),
+              ),
+              SessionInputs(
+                  sessionTextEditingController: widget.textEditingControllers[
+                  SESSION_TEXT_EDITING_CONTROLLER_KEY]!,
+                  sessionCooldownTextEditingController: widget
+                      .textEditingControllers[
+                  SESSION_COOLDOWN_TEXT_EDITING_CONTROLLER_KEY]!,
+                  onChanged: (newValue) => setState(() {})),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: SizeConfig.blockSizeHorizontal * 2,
                     vertical: SizeConfig.blockSizeVertical * 2),
                 child: MainButton(
                     isEnabled: !isAnyTextFieldEmpty(),
-                    text: "Save Workout",
+                    text: Strings.saveWorkoutButton,
                     callback: () {
                       widget.db.saveWorkout(getUpdatedTimer());
                       Navigator.pop(context);
@@ -110,7 +140,6 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
     );
   }
 }
-
 
 
 Widget editWorkoutCountdownTextField(
@@ -129,9 +158,9 @@ Widget editWorkoutCountdownTextField(
             vertical: SizeConfig.blockSizeVertical * 2,
             horizontal: SizeConfig.blockSizeHorizontal * 2),
         controller: textEditingControllers[i],
-        placeholder: "Workout ${i + 1} countdown",
+        placeholder: "Workout ${i + 1} Countdown",
         placeholderStyle:
-            const TextStyle(color: AppColors.inputPlaceholderColor),
+        const TextStyle(color: AppColors.inputPlaceholderColor),
         keyboardType: TextInputType.number,
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.digitsOnly
@@ -140,3 +169,4 @@ Widget editWorkoutCountdownTextField(
     ],
   );
 }
+

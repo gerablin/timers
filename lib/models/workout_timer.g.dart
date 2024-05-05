@@ -32,13 +32,23 @@ const WorkoutTimerSchema = CollectionSchema(
       name: r'runs',
       type: IsarType.long,
     ),
-    r'workoutCountDown': PropertySchema(
+    r'sessionCooldownTime': PropertySchema(
       id: 3,
+      name: r'sessionCooldownTime',
+      type: IsarType.long,
+    ),
+    r'sessions': PropertySchema(
+      id: 4,
+      name: r'sessions',
+      type: IsarType.long,
+    ),
+    r'workoutCountDown': PropertySchema(
+      id: 5,
       name: r'workoutCountDown',
       type: IsarType.long,
     ),
     r'workoutDurations': PropertySchema(
-      id: 4,
+      id: 6,
       name: r'workoutDurations',
       type: IsarType.longList,
     )
@@ -77,8 +87,10 @@ void _workoutTimerSerialize(
   writer.writeString(offsets[0], object.name);
   writer.writeLong(offsets[1], object.restCountDown);
   writer.writeLong(offsets[2], object.runs);
-  writer.writeLong(offsets[3], object.workoutCountDown);
-  writer.writeLongList(offsets[4], object.workoutDurations);
+  writer.writeLong(offsets[3], object.sessionCooldownTime);
+  writer.writeLong(offsets[4], object.sessions);
+  writer.writeLong(offsets[5], object.workoutCountDown);
+  writer.writeLongList(offsets[6], object.workoutDurations);
 }
 
 WorkoutTimer _workoutTimerDeserialize(
@@ -91,8 +103,10 @@ WorkoutTimer _workoutTimerDeserialize(
     name: reader.readString(offsets[0]),
     restCountDown: reader.readLong(offsets[1]),
     runs: reader.readLong(offsets[2]),
-    workoutCountDown: reader.readLong(offsets[3]),
-    workoutDurations: reader.readLongList(offsets[4]) ?? const [],
+    sessionCooldownTime: reader.readLongOrNull(offsets[3]),
+    sessions: reader.readLongOrNull(offsets[4]),
+    workoutCountDown: reader.readLong(offsets[5]),
+    workoutDurations: reader.readLongList(offsets[6]) ?? const [],
   );
   object.id = id;
   return object;
@@ -112,8 +126,12 @@ P _workoutTimerDeserializeProp<P>(
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 4:
+      return (reader.readLongOrNull(offset)) as P;
+    case 5:
+      return (reader.readLong(offset)) as P;
+    case 6:
       return (reader.readLongList(offset) ?? const []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -512,6 +530,154 @@ extension WorkoutTimerQueryFilter
   }
 
   QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionCooldownTimeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'sessionCooldownTime',
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionCooldownTimeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'sessionCooldownTime',
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionCooldownTimeEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'sessionCooldownTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionCooldownTimeGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'sessionCooldownTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionCooldownTimeLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'sessionCooldownTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionCooldownTimeBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'sessionCooldownTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionsIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'sessions',
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionsIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'sessions',
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionsEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'sessions',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionsGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'sessions',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionsLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'sessions',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
+      sessionsBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'sessions',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterFilterCondition>
       workoutCountDownEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -759,6 +925,32 @@ extension WorkoutTimerQuerySortBy
   }
 
   QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy>
+      sortBySessionCooldownTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sessionCooldownTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy>
+      sortBySessionCooldownTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sessionCooldownTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy> sortBySessions() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sessions', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy> sortBySessionsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sessions', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy>
       sortByWorkoutCountDown() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'workoutCountDown', Sort.asc);
@@ -825,6 +1017,32 @@ extension WorkoutTimerQuerySortThenBy
   }
 
   QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy>
+      thenBySessionCooldownTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sessionCooldownTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy>
+      thenBySessionCooldownTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sessionCooldownTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy> thenBySessions() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sessions', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy> thenBySessionsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sessions', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QAfterSortBy>
       thenByWorkoutCountDown() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'workoutCountDown', Sort.asc);
@@ -858,6 +1076,19 @@ extension WorkoutTimerQueryWhereDistinct
   QueryBuilder<WorkoutTimer, WorkoutTimer, QDistinct> distinctByRuns() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'runs');
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QDistinct>
+      distinctBySessionCooldownTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'sessionCooldownTime');
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, WorkoutTimer, QDistinct> distinctBySessions() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'sessions');
     });
   }
 
@@ -899,6 +1130,19 @@ extension WorkoutTimerQueryProperty
   QueryBuilder<WorkoutTimer, int, QQueryOperations> runsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'runs');
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, int?, QQueryOperations>
+      sessionCooldownTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'sessionCooldownTime');
+    });
+  }
+
+  QueryBuilder<WorkoutTimer, int?, QQueryOperations> sessionsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'sessions');
     });
   }
 

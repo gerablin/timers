@@ -12,3 +12,10 @@ const String stopTimer = "Stop";
 const String startTimer = "Start";
 const String resetTimer = "Reset";
 //
+
+// Text Fields
+const String sessionSubtitle = 'Sessions';
+const String sessionPlaceholder = 'Sessions';
+const String sessionCooldownPlaceholder = "Session Coolodwn Time in seconds";
+const String saveWorkoutButton = "Save Workout";
+//
