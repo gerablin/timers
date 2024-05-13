@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SessionsIcon extends StatelessWidget {
-  const SessionsIcon({super.key});
+class SessionsCooldownIcon extends StatelessWidget {
+  const SessionsCooldownIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Icon(
-      Icons.update,
+      Icons.ac_unit_outlined,
       color: Colors.indigoAccent,
     );
   }

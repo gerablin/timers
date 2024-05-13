@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/db/isar_db.dart';
+import 'package:timers/components/icons/fire_icon.dart';
 import 'package:timers/components/text/bottom_sheet_title.dart';
 import 'package:timers/components/text_fields/session_inputs.dart';
 import 'package:timers/models/workout_timer.dart';
@@ -11,19 +12,29 @@ import 'package:timers/utils/constants.dart';
 import 'package:timers/utils/size_config.dart';
 import 'package:timers/utils/strings.dart' as Strings;
 
-void showEditTimerBottomSheet(BuildContext context, IsarDb db,
-    WorkoutTimer workoutTimer) {
+void showEditTimerBottomSheet(
+    BuildContext context, IsarDb db, WorkoutTimer workoutTimer) {
   Map<int, TextEditingController> textEditingControllers = {};
 
   void setupTextEditingControllers() {
     for (var i = 0; i < workoutTimer.runs; i++) {
-      textEditingControllers.putIfAbsent(i, () => TextEditingController());
+      textEditingControllers.putIfAbsent(
+          i,
+          () => TextEditingController(
+              text: _getCurrentWorkoutTime(workoutTimer, i)));
     }
     textEditingControllers.putIfAbsent(
-        SESSION_TEXT_EDITING_CONTROLLER_KEY, () => TextEditingController());
+        runCooldownTextEditingControllerKey,
+        () =>
+            TextEditingController(text: workoutTimer.restCountDown.toString()));
+
+    // session text controllers
+    textEditingControllers.putIfAbsent(sessionTextEditingControllerKey,
+        () => TextEditingController(text: workoutTimer.sessions.toString()));
     textEditingControllers.putIfAbsent(
-        SESSION_COOLDOWN_TEXT_EDITING_CONTROLLER_KEY,
-            () => TextEditingController());
+        sessionCooldownTextEditingControllerKey,
+        () => TextEditingController(
+            text: workoutTimer.sessionCooldownTime.toString()));
   }
 
   showModalBottomSheet(
@@ -40,11 +51,23 @@ void showEditTimerBottomSheet(BuildContext context, IsarDb db,
       });
 }
 
+String _getCurrentWorkoutTime(WorkoutTimer workoutTimer, int index) {
+  // default workout countdown
+  if (workoutTimer.workoutDurations.isEmpty) {
+    return workoutTimer.workoutCountDown.toString();
+  }
+  //individual timers have been set
+  else {
+    return workoutTimer.workoutDurations[index].toString();
+  }
+}
+
 class EditWorkoutInputs extends StatefulWidget {
-  const EditWorkoutInputs({super.key,
-    required this.textEditingControllers,
-    required this.workoutTimer,
-    required this.db});
+  const EditWorkoutInputs(
+      {super.key,
+      required this.textEditingControllers,
+      required this.workoutTimer,
+      required this.db});
 
   final WorkoutTimer workoutTimer;
   final IsarDb db;
@@ -63,14 +86,15 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
       }
     }
     widget.workoutTimer.workoutDurations = durations;
-    widget.workoutTimer.sessions = int.tryParse(widget
-        .textEditingControllers[SESSION_TEXT_EDITING_CONTROLLER_KEY]
-        ?.text ??
-        "");
+    widget.workoutTimer.sessions = int.tryParse(
+        widget.textEditingControllers[sessionTextEditingControllerKey]?.text ??
+            "");
     widget.workoutTimer.sessionCooldownTime = int.tryParse(widget
-        .textEditingControllers[SESSION_COOLDOWN_TEXT_EDITING_CONTROLLER_KEY]
-        ?.text ??
+            .textEditingControllers[sessionCooldownTextEditingControllerKey]
+            ?.text ??
         "");
+    widget.workoutTimer.restCountDown = int.parse(widget
+        .textEditingControllers[runCooldownTextEditingControllerKey]!.text);
     return widget.workoutTimer;
   }
 
@@ -89,10 +113,7 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
       padding: EdgeInsets.only(
           left: SizeConfig.blockSizeHorizontal * 2,
           right: SizeConfig.blockSizeHorizontal * 2,
-          bottom: (MediaQuery
-              .of(context)
-              .viewInsets
-              .bottom) +
+          bottom: (MediaQuery.of(context).viewInsets.bottom) +
               SizeConfig.blockSizeVertical * 3),
       child: SingleChildScrollView(
         child: SizedBox(
@@ -105,21 +126,49 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
               // Widgets for workout time
               for (var i = 0; i < widget.workoutTimer.runs; i++)
                 editWorkoutCountdownTextField(widget.textEditingControllers, i,
-                        (newValue) => setState(() {})),
+                    (newValue) => setState(() {})),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical),
+              ),
+              Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: FireIcon(),
+                  ),
+                  Flexible(
+                    child: CupertinoTextField(
+                      onChanged: (newValue) => setState(() {}),
+                      padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.blockSizeVertical * 2,
+                          horizontal: SizeConfig.blockSizeHorizontal * 2),
+                      controller: widget.textEditingControllers[
+                          runCooldownTextEditingControllerKey]!,
+                      placeholder: "Rest time between workout",
+                      placeholderStyle: const TextStyle(
+                          color: AppColors.inputPlaceholderColor),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ], // Only numbers can be entered
+                    ),
+                  ),
+                ],
+              ),
               Padding(
                 padding: EdgeInsets.only(
                     left: SizeConfig.blockSizeHorizontal * 2,
                     right: SizeConfig.blockSizeHorizontal * 2,
-                    top: SizeConfig.blockSizeVertical * 2
-                ),
+                    top: SizeConfig.blockSizeVertical * 2),
                 child: const BottomSheetSubtitle(text: Strings.sessionSubtitle),
               ),
               SessionInputs(
-                  sessionTextEditingController: widget.textEditingControllers[
-                  SESSION_TEXT_EDITING_CONTROLLER_KEY]!,
-                  sessionCooldownTextEditingController: widget
-                      .textEditingControllers[
-                  SESSION_COOLDOWN_TEXT_EDITING_CONTROLLER_KEY]!,
+                  sessionTextEditingController: widget
+                      .textEditingControllers[sessionTextEditingControllerKey]!,
+                  sessionCooldownTextEditingController:
+                      widget.textEditingControllers[
+                          sessionCooldownTextEditingControllerKey]!,
                   onChanged: (newValue) => setState(() {})),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -141,7 +190,6 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
   }
 }
 
-
 Widget editWorkoutCountdownTextField(
     Map<int, TextEditingController> textEditingControllers,
     int i,
@@ -152,21 +200,30 @@ Widget editWorkoutCountdownTextField(
       Padding(
         padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
       ),
-      CupertinoTextField(
-        onChanged: onChanged,
-        padding: EdgeInsets.symmetric(
-            vertical: SizeConfig.blockSizeVertical * 2,
-            horizontal: SizeConfig.blockSizeHorizontal * 2),
-        controller: textEditingControllers[i],
-        placeholder: "Workout ${i + 1} Countdown",
-        placeholderStyle:
-        const TextStyle(color: AppColors.inputPlaceholderColor),
-        keyboardType: TextInputType.number,
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.digitsOnly
-        ], // Only numbers can be entered
+      Row(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(right: 8.0),
+            child: FireIcon(),
+          ),
+          Flexible(
+            child: CupertinoTextField(
+              onChanged: onChanged,
+              padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.blockSizeVertical * 2,
+                  horizontal: SizeConfig.blockSizeHorizontal * 2),
+              controller: textEditingControllers[i],
+              placeholder: "Workout ${i + 1} Countdown",
+              placeholderStyle:
+                  const TextStyle(color: AppColors.inputPlaceholderColor),
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ], // Only numbers can be entered
+            ),
+          ),
+        ],
       ),
     ],
   );
 }
-

@@ -1,2 +1,3 @@
-const int SESSION_TEXT_EDITING_CONTROLLER_KEY = 1000;
-const int SESSION_COOLDOWN_TEXT_EDITING_CONTROLLER_KEY = 1001;
+const int runCooldownTextEditingControllerKey = 1000;
+const int sessionTextEditingControllerKey = 1001;
+const int sessionCooldownTextEditingControllerKey = 1002;
