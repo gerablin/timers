@@ -17,10 +17,12 @@ class WorkoutList extends StatelessWidget {
     super.key,
     required this.db,
     this.isEditMode = false,
+    required this.onWorkoutClicked,
   });
 
   final IsarDb db;
   final bool isEditMode;
+  final VoidCallback onWorkoutClicked;
 
   void _navigateToWorkout(BuildContext context, int id) {
     context.push('/timer/${id.toString()}');
@@ -28,7 +30,12 @@ class WorkoutList extends StatelessWidget {
 
   void _onWorkoutClicked(BuildContext context, WorkoutTimer workoutTimer) {
     if (isEditMode) {
-      showEditTimerBottomSheet(context, db, workoutTimer);
+      onWorkoutClicked();
+      showEditTimerBottomSheet(
+          context: context,
+          db: db,
+          workoutTimer: workoutTimer,
+     );
     } else {
       Future.delayed(const Duration(milliseconds: 300), () {
         _navigateToWorkout(context, workoutTimer.id);
@@ -50,6 +57,7 @@ class WorkoutList extends StatelessWidget {
                   if (snapshot.hasError) return Text(snapshot.error.toString());
 
                   if (snapshot.hasData) {
+
                     final List<Widget> workoutCards = [];
                     final workouts = snapshot.data;
                     for (var workout in workouts!) {
@@ -205,8 +213,7 @@ class SessionsRow extends StatelessWidget {
             const SessionsIcon(),
             Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal:
-                    SizeConfig.blockSizeHorizontal)),
+                    horizontal: SizeConfig.blockSizeHorizontal)),
             const Text("Sessions"),
           ],
         ),

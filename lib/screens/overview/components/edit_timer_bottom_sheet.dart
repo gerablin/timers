@@ -13,7 +13,9 @@ import 'package:timers/utils/size_config.dart';
 import 'package:timers/utils/strings.dart' as Strings;
 
 void showEditTimerBottomSheet(
-    BuildContext context, IsarDb db, WorkoutTimer workoutTimer) {
+    {required BuildContext context,
+    required IsarDb db,
+    required WorkoutTimer workoutTimer}) {
   Map<int, TextEditingController> textEditingControllers = {};
 
   void setupTextEditingControllers() {

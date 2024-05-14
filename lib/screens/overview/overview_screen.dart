@@ -94,6 +94,7 @@ class _OverviewScreenState extends State<OverviewScreen>
                 WorkoutList(
                   db: db,
                   isEditMode: isEditMode,
+                  onWorkoutClicked: _toggleEditMode,
                 )
               ],
             ),
