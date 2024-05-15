@@ -1,6 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rive/rive.dart';
 import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/buttons/secondary_button.dart';
 import 'package:timers/components/db/isar_db.dart';
@@ -9,6 +11,7 @@ import 'package:timers/components/icons/fire_icon.dart';
 import 'package:timers/components/timer/countdown.dart';
 import 'package:timers/models/workout_timer.dart';
 import 'package:timers/utils/app_colors.dart';
+import 'package:timers/utils/constants.dart';
 import 'package:timers/utils/size_config.dart';
 import 'package:timers/utils/strings.dart' as Strings;
 import 'package:wakelock_plus/wakelock_plus.dart';
@@ -45,10 +48,16 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   late WorkoutTimer? workoutTimer;
 
   //////////////////
+  // rive animation
+  Artboard? _riveArtboard;
+  SMITrigger? _explodeConfetti;
+
+  //////////////////
   @override
   void initState() {
     WakelockPlus.enable();
     _initFirstTimer();
+    _loadAnimation();
     super.initState();
   }
 
@@ -98,6 +107,11 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
     setState(() {
       isWorkoutFinished = true;
     });
+    Future.delayed(Duration(milliseconds: 1000));
+    print("$_explodeConfetti");
+    // not sure why this is needed here, but github issue for solution is here: https://github.com/rive-app/rive-flutter/issues/329
+    _riveArtboard?.advance(1 / 60, nested: true);
+    _explodeConfetti?.fire();
   }
 
   void _startPauseTimer() {
@@ -128,7 +142,8 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   }
 
   void _updateTimerSubtitle() {
-    String aggregateRuns = (int.parse(runs) * (workoutTimer!.sessions!)).toString();
+    String aggregateRuns =
+        (int.parse(runs) * (workoutTimer!.sessions!)).toString();
     String workoutAmount = "(${currentRun.toString()}/$aggregateRuns)";
     bool isRestTimer = timers.first.second;
     timerSubtitle = isRestTimer
@@ -137,6 +152,28 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
 
     timerIcon = isRestTimer ? const CooldownIcon() : const FireIcon();
     if (!isRestTimer) currentRun++;
+  }
+
+  void _loadAnimation() {
+    rootBundle.load('assets/animations/confetti.riv').then((data) async {
+      // Load the RiveFile from the binary data.
+      final file = RiveFile.import(data);
+
+      // The artboard is the root of the animation and gets drawn in the
+      // Rive widget.
+      final artboard = file.mainArtboard;
+      var controller = StateMachineController.fromArtboard(
+          artboard, riveConfettiStateMachine);
+      if (controller != null) {
+        artboard.addController(controller);
+        _explodeConfetti = controller
+            .findInput<bool>(riveConfettiStateMachineTrigger) as SMITrigger;
+      }
+      setState(() {
+        _riveArtboard = artboard;
+        print("initialized animation");
+      });
+    });
   }
 
   @override
@@ -179,7 +216,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
                         child: CircularProgressIndicator(),
                       )
                     else if (isWorkoutFinished)
-                      const Text(Strings.workoutFinishedTitle)
+                      buildFinishedWorkoutContent()
                     else
                       Countdown(
                         seconds: currentTimer!,
@@ -205,6 +242,25 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
         ],
       ),
     );
+  }
+
+  Stack buildFinishedWorkoutContent() {
+    return Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        const Text(Strings.workoutFinishedTitle),
+                        SizedBox(
+                          width: SizeConfig.blockSizeHorizontal * 20,
+                          height: SizeConfig.blockSizeVertical * 40,
+                          child: _riveArtboard == null
+                              ? SizedBox()
+                              : Rive(
+                                  fit: BoxFit.cover,
+                                  artboard: _riveArtboard!,
+                                ),
+                        ),
+                      ],
+                    );
   }
 
   Padding buildButtons(bool isWorkoutFinished) {

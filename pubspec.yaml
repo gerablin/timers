@@ -45,6 +45,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   package_info_plus: ^7.0.0
   animations: ^2.0.11
+  rive: ^0.13.4
 
 flutter_launcher_icons:
   android: false
@@ -80,6 +81,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/sounds/
+    - assets/animations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

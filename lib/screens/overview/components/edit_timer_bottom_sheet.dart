@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/db/isar_db.dart';
+import 'package:timers/components/icons/cooldown_icon.dart';
 import 'package:timers/components/icons/fire_icon.dart';
 import 'package:timers/components/text/bottom_sheet_title.dart';
 import 'package:timers/components/text_fields/session_inputs.dart';
@@ -137,7 +138,7 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(right: 8.0),
-                    child: FireIcon(),
+                    child: CooldownIcon(),
                   ),
                   Flexible(
                     child: CupertinoTextField(
