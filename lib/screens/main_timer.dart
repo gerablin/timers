@@ -4,8 +4,11 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rive/rive.dart';
+import 'package:timers/components/animations/confetti_animation_diagonal.dart';
+import 'package:timers/components/animations/confetti_animation_explosion.dart';
 import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/buttons/secondary_button.dart';
 import 'package:timers/components/db/isar_db.dart';
@@ -111,6 +114,10 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
     setState(() {
       isWorkoutFinished = true;
     });
+    _playConfettiAnimation(_animationCount);
+  }
+
+  void _playConfettiAnimation(int _animationCount) {
     _animationCount = 0; // Reset animation count
 
     //initial confetti fire
@@ -128,9 +135,6 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
         timer.cancel();
       }
     });
-    // not sure why this is needed here, but github issue for solution is here: https://github.com/rive-app/rive-flutter/issues/329
-    // _riveArtboard?.advance(1 / 60, nested: true);
-    // _explodeConfetti?.fire();
   }
 
   void _startPauseTimer() {
@@ -174,7 +178,9 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
   }
 
   void _loadAnimation() {
-    rootBundle.load('assets/animations/confetti-explosion.riv').then((data) async {
+    rootBundle
+        .load('assets/animations/confetti-explosion.riv')
+        .then((data) async {
       // Load the RiveFile from the binary data.
       final file = RiveFile.import(data);
 
@@ -185,8 +191,9 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
           artboard, riveConfettiExplosionStateMachine);
       if (controller != null) {
         artboard.addController(controller);
-        _explodeConfetti = controller
-            .findInput<bool>(riveConfettiExplosionStateMachineTrigger) as SMITrigger;
+        _explodeConfetti =
+            controller.findInput<bool>(riveConfettiExplosionStateMachineTrigger)
+                as SMITrigger;
       }
       setState(() {
         _riveArtboard = artboard;
@@ -212,22 +219,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
       ),
       body: Stack(
         children: [
-          Padding(
-            padding: EdgeInsets.only(
-                left: SizeConfig.blockSizeHorizontal * 10,
-                bottom: SizeConfig.blockSizeVertical * 20),
-            child: Align(
-                alignment: Alignment.bottomLeft,
-                child: ConfettiAnimation(riveArtboard: _riveArtboard)),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                left: SizeConfig.blockSizeHorizontal * 10,
-                bottom: SizeConfig.blockSizeVertical * 20),
-            child: Align(
-                alignment: Alignment.bottomRight,
-                child: ConfettiAnimation(riveArtboard: _riveArtboard)),
-          ),
+          if(isWorkoutFinished) const ConfettiAnimationDiagonal(),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -255,7 +247,7 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
                             child: CircularProgressIndicator(),
                           )
                         else if (isWorkoutFinished)
-                          buildFinishedWorkoutContent()
+                          const Text(Strings.workoutFinishedTitle)
                         else
                           Countdown(
                             seconds: currentTimer!,
@@ -286,15 +278,6 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
     );
   }
 
-  Stack buildFinishedWorkoutContent() {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        const Text(Strings.workoutFinishedTitle),
-        ConfettiAnimation(riveArtboard: _riveArtboard),
-      ],
-    );
-  }
 
   Padding buildButtons(bool isWorkoutFinished) {
     return Padding(
@@ -327,29 +310,6 @@ class _MainTimerState extends State<MainTimer> with TickerProviderStateMixin {
 
   _navigateBackToOverview(BuildContext context) {
     context.pop(context);
-  }
-}
-
-class ConfettiAnimation extends StatelessWidget {
-  const ConfettiAnimation({
-    super.key,
-    required Artboard? riveArtboard,
-  }) : _riveArtboard = riveArtboard;
-
-  final Artboard? _riveArtboard;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: SizeConfig.blockSizeHorizontal * 20,
-      height: SizeConfig.blockSizeVertical * 40,
-      child: _riveArtboard == null
-          ? const SizedBox()
-          : Rive(
-              fit: BoxFit.cover,
-              artboard: _riveArtboard!,
-            ),
-    );
   }
 }
 
