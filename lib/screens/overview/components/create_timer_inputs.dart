@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:timers/components/buttons/main_button.dart';
 import 'package:timers/components/db/isar_db.dart';
+import 'package:timers/components/icons/cooldown_icon.dart';
+import 'package:timers/components/icons/fire_icon.dart';
+import 'package:timers/components/icons/runs_icon.dart';
 import 'package:timers/components/text/bottom_sheet_title.dart';
 import 'package:timers/components/text_fields/session_inputs.dart';
 import 'package:timers/models/workout_timer.dart';
@@ -60,6 +65,7 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              // name
               CupertinoTextField(
                   onChanged: (newValue) => setState(() {}),
                   padding: EdgeInsets.symmetric(
@@ -76,18 +82,29 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                   padding: EdgeInsets.symmetric(
                       vertical: SizeConfig.blockSizeVertical)),
 
-              CupertinoTextField(
-                onChanged: (newValue) => setState(() {}),
-                padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.blockSizeVertical * 2,
-                    horizontal: SizeConfig.blockSizeHorizontal * 2),
-                controller: widget.workoutTimeController,
-                placeholder: "Workout time in seconds",
-                placeholderStyle:
-                    const TextStyle(color: AppColors.inputPlaceholderColor),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
+              // workout time
+              Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: FireIcon(),
+                  ),
+                  Flexible(
+                    child: CupertinoTextField(
+                      onChanged: (newValue) => setState(() {}),
+                      padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.blockSizeVertical * 2,
+                          horizontal: SizeConfig.blockSizeHorizontal * 2),
+                      controller: widget.workoutTimeController,
+                      placeholder: "Workout time in seconds",
+                      placeholderStyle:
+                          const TextStyle(color: AppColors.inputPlaceholderColor),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                    ),
+                  ),
                 ],
               ),
               Padding(
@@ -95,38 +112,58 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                       vertical: SizeConfig.blockSizeVertical)),
 
               // rest time
-              CupertinoTextField(
-                onChanged: (newValue) => setState(() {}),
-                padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.blockSizeVertical * 2,
-                    horizontal: SizeConfig.blockSizeHorizontal * 2),
-                controller: widget.restTimeController,
-                placeholder: "Rest time in seconds",
-                placeholderStyle:
-                    const TextStyle(color: AppColors.inputPlaceholderColor),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ], // Only numbers can be entered
+              Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: CooldownIcon(),
+                  ),
+                  Flexible(
+                    child: CupertinoTextField(
+                      onChanged: (newValue) => setState(() {}),
+                      padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.blockSizeVertical * 2,
+                          horizontal: SizeConfig.blockSizeHorizontal * 2),
+                      controller: widget.restTimeController,
+                      placeholder: "Rest time in seconds",
+                      placeholderStyle:
+                          const TextStyle(color: AppColors.inputPlaceholderColor),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ], // Only numbers can be entered
+                    ),
+                  ),
+                ],
               ),
               Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: SizeConfig.blockSizeVertical)),
 
               // runs
-              CupertinoTextField(
-                onChanged: (newValue) => setState(() {}),
-                padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.blockSizeVertical * 2,
-                    horizontal: SizeConfig.blockSizeHorizontal * 2),
-                controller: widget.runsController,
-                placeholder: "Amount of runs",
-                placeholderStyle:
-                    const TextStyle(color: AppColors.inputPlaceholderColor),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ], // Only numbers can be entered
+              Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: RunsIcon(),
+                  ),
+                  Flexible(
+                    child: CupertinoTextField(
+                      onChanged: (newValue) => setState(() {}),
+                      padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.blockSizeVertical * 2,
+                          horizontal: SizeConfig.blockSizeHorizontal * 2),
+                      controller: widget.runsController,
+                      placeholder: "Amount of runs",
+                      placeholderStyle:
+                          const TextStyle(color: AppColors.inputPlaceholderColor),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ], // Only numbers can be entered
+                    ),
+                  ),
+                ],
               ),
               Padding(
                 padding: EdgeInsets.only(

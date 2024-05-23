@@ -10,12 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f9c2ff5-acea-438b-a84e-8433530d3c80" name="Changes" comment="add sessions to workouts">
-      <change afterPath="$PROJECT_DIR$/assets/animations/confetti-diagonal.riv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/components/animations/confetti_animation_diagonal.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/components/animations/confetti_animation_explosion.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/icons/runs_icon.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/main_timer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/main_timer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/create_timer_inputs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/create_timer_inputs.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/overview/components/workout_list.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

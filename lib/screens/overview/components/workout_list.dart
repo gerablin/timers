@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:timers/components/db/isar_db.dart';
 import 'package:timers/components/icons/cooldown_icon.dart';
 import 'package:timers/components/icons/fire_icon.dart';
+import 'package:timers/components/icons/runs_icon.dart';
 import 'package:timers/components/icons/sessions_icon.dart';
 import 'package:timers/models/workout_timer.dart';
 import 'package:timers/screens/overview/components/edit_timer_bottom_sheet.dart';
@@ -137,10 +138,7 @@ class WorkoutCard extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              const Icon(
-                                Icons.directions_run_outlined,
-                                color: AppColors.accentColor,
-                              ),
+                              const RunsIcon(),
                               Padding(
                                   padding: EdgeInsets.symmetric(
                                       horizontal:
