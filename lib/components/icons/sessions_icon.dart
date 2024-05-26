@@ -6,7 +6,7 @@ class SessionsIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Icon(
-      Icons.update,
+      Icons.loop,
       color: Colors.indigoAccent,
     );
   }

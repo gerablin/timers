@@ -7,6 +7,7 @@ import 'package:timers/components/icons/cooldown_icon.dart';
 import 'package:timers/components/icons/fire_icon.dart';
 import 'package:timers/components/text/bottom_sheet_title.dart';
 import 'package:timers/components/text_fields/session_inputs.dart';
+import 'package:timers/components/text_fields/text_field_hint_overlay.dart';
 import 'package:timers/models/workout_timer.dart';
 import 'package:timers/utils/app_colors.dart';
 import 'package:timers/utils/constants.dart';
@@ -134,31 +135,7 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
                 padding: EdgeInsets.symmetric(
                     vertical: SizeConfig.blockSizeVertical),
               ),
-              Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: CooldownIcon(),
-                  ),
-                  Flexible(
-                    child: CupertinoTextField(
-                      onChanged: (newValue) => setState(() {}),
-                      padding: EdgeInsets.symmetric(
-                          vertical: SizeConfig.blockSizeVertical * 2,
-                          horizontal: SizeConfig.blockSizeHorizontal * 2),
-                      controller: widget.textEditingControllers[
-                          runCooldownTextEditingControllerKey]!,
-                      placeholder: "Rest time between workout",
-                      placeholderStyle: const TextStyle(
-                          color: AppColors.inputPlaceholderColor),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ], // Only numbers can be entered
-                    ),
-                  ),
-                ],
-              ),
+              buildRestTimeInput(),
               Padding(
                 padding: EdgeInsets.only(
                     left: SizeConfig.blockSizeHorizontal * 2,
@@ -167,6 +144,7 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
                 child: const BottomSheetSubtitle(text: Strings.sessionSubtitle),
               ),
               SessionInputs(
+                isEditInput: true,
                   sessionTextEditingController: widget
                       .textEditingControllers[sessionTextEditingControllerKey]!,
                   sessionCooldownTextEditingController:
@@ -191,6 +169,39 @@ class _EditWorkoutInputsState extends State<EditWorkoutInputs> {
       ),
     );
   }
+
+  Row buildRestTimeInput() {
+    return Row(
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(right: 8.0),
+          child: CooldownIcon(),
+        ),
+        Flexible(
+          child: Stack(
+            children: [
+              CupertinoTextField(
+                onChanged: (newValue) => setState(() {}),
+                padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 2,
+                    horizontal: SizeConfig.blockSizeHorizontal * 2),
+                controller: widget.textEditingControllers[
+                    runCooldownTextEditingControllerKey]!,
+                placeholder: "Rest time between workout",
+                placeholderStyle:
+                    const TextStyle(color: AppColors.inputPlaceholderColor),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ], // Only numbers can be entered
+              ),
+              TextFieldHintOverlay(text: "Rest Time between exercises")
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 Widget editWorkoutCountdownTextField(
@@ -210,19 +221,24 @@ Widget editWorkoutCountdownTextField(
             child: FireIcon(),
           ),
           Flexible(
-            child: CupertinoTextField(
-              onChanged: onChanged,
-              padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.blockSizeVertical * 2,
-                  horizontal: SizeConfig.blockSizeHorizontal * 2),
-              controller: textEditingControllers[i],
-              placeholder: "Workout ${i + 1} Countdown",
-              placeholderStyle:
-                  const TextStyle(color: AppColors.inputPlaceholderColor),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ], // Only numbers can be entered
+            child: Stack(
+              children: [
+                CupertinoTextField(
+                  onChanged: onChanged,
+                  padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.blockSizeVertical * 2,
+                      horizontal: SizeConfig.blockSizeHorizontal * 2),
+                  controller: textEditingControllers[i],
+                  placeholder: "Workout ${i + 1} Countdown",
+                  placeholderStyle:
+                      const TextStyle(color: AppColors.inputPlaceholderColor),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ], // Only numbers can be entered
+                ),
+                TextFieldHintOverlay(text: "Exercise ${i+1} duration"),
+              ],
             ),
           ),
         ],
@@ -230,3 +246,4 @@ Widget editWorkoutCountdownTextField(
     ],
   );
 }
+

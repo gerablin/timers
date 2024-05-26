@@ -177,7 +177,8 @@ class _CreateTimerInputsState extends State<CreateTimerInputs> {
                   sessionTextEditingController: widget.sessionController,
                   sessionCooldownTextEditingController:
                       widget.sessionCooldownController,
-                  onChanged: (newValue) => setState(() {}))
+                  onChanged: (newValue) => setState(() {}),
+              isEditInput: false,)
             ],
           ),
         ),
