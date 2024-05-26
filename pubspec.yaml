@@ -46,6 +46,7 @@ dependencies:
   package_info_plus: ^7.0.0
   animations: ^2.0.11
   rive: ^0.13.4
+  flutter_native_splash: ^2.4.0
 
 flutter_launcher_icons:
   android: false
@@ -108,3 +109,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_native_splash:
+  color: "#0E1117"
+  image: assets/icons/appicon.png

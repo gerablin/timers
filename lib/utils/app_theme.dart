@@ -66,13 +66,13 @@ class AppTheme {
 
 class MyTextTheme {
   static const TextTheme textTheme = TextTheme(
-    headline6: TextStyle(
+    headlineLarge: TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 22,
       color: AppColors.secondaryColor,
       fontFamily: "OpenSans-ExtraBold",
     ),
-    bodyText2: TextStyle(fontSize: 16, color: AppColors.textColor),
+    bodyMedium: TextStyle(fontSize: 16, color: AppColors.textColor),
   );
 }
 
