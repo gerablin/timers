@@ -11,17 +11,17 @@ timerbuddy is a lightweight and intuitive timer app designed to streamline your 
 
 ### Usage
 
-1. Download and install timerbuddy from the [Play Store](link) / App Store or compile it yourself.
+1. Download and install timerbuddy from the   <img src="https://github.com/gerablin/timers/assets/121195720/74f2f2e5-06ed-4e9a-9234-e2824cc9b517" width="100" height="33" />   or I gladly invite you to compile it yourself :).
 2. Launch the app and set your desired timer durations.
 3. Edit your timer if you want different durations in a workout
 4. Start the timers and stay focused on your workout with ease.
 
 ### Screenshots
-<img src="https://github.com/gerablin/timers/assets/121195720/d9aa4969-5a1a-4f1e-8500-511427f673af" width="276" height="480" />
+<img src="https://github.com/gerablin/timers/assets/121195720/8cddef55-e22e-4d68-b55d-9fcd1548b470"  width="248" height="537.6" />
 
-<img src="https://github.com/gerablin/timers/assets/121195720/74e97875-4ab2-46f7-88bc-11e26189b5a3" width="276" height="480" />
+<img src="https://github.com/gerablin/timers/assets/121195720/20c734a0-1e43-4c75-8b1b-8bc8ef885bd5" width="248" height="537.6" />
 
-<img src="https://github.com/gerablin/timers/assets/121195720/b923efee-d451-434f-a59c-e7a5b0de845a" width="276" height="480" />
+<img src="https://github.com/gerablin/timers/assets/121195720/b923efee-d451-434f-a59c-e7a5b0de845a" width="248" height="537.6" />
 
 
 
