@@ -21,6 +21,10 @@ timerbuddy is a lightweight and intuitive timer app designed to streamline your 
 
 <img src="https://github.com/gerablin/timers/assets/121195720/74e97875-4ab2-46f7-88bc-11e26189b5a3" width="276" height="480" />
 
+<img src="https://github.com/gerablin/timers/assets/121195720/b923efee-d451-434f-a59c-e7a5b0de845a" width="276" height="480" />
+
+
+
 ### Feedback
 
 I value your feedback! If you have any feature wishes, suggestions, or issues, please feel free to reach out schieberdevacc+timerbuddy@gmail.com. :)
